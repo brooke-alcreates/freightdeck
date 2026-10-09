@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="color-scheme" content="light">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FreightDeck — From freight list to bid, in minutes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,300..900;1,6..12,300..900&display=swap" rel="stylesheet">
+<style>
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-thin.woff2) format("woff2");font-weight:100;font-style:normal;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-extralight.woff2) format("woff2");font-weight:200;font-style:normal;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-light.woff2) format("woff2");font-weight:300;font-style:normal;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-medium.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-demibold.woff2) format("woff2");font-weight:600;font-style:normal;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-bold.woff2) format("woff2");font-weight:700;font-style:normal;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-extrabold.woff2) format("woff2");font-weight:800;font-style:normal;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-black.woff2) format("woff2");font-weight:900;font-style:normal;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-thin-italic.woff2) format("woff2");font-weight:100;font-style:italic;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-extralight-italic.woff2) format("woff2");font-weight:200;font-style:italic;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-light-italic.woff2) format("woff2");font-weight:300;font-style:italic;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-regular-italic.woff2) format("woff2");font-weight:400;font-style:italic;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-medium-italic.woff2) format("woff2");font-weight:500;font-style:italic;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-demibold-italic.woff2) format("woff2");font-weight:600;font-style:italic;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-bold-italic.woff2) format("woff2");font-weight:700;font-style:italic;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-extrabold-italic.woff2) format("woff2");font-weight:800;font-style:italic;font-display:swap}
+@font-face{font-family:"Octosquares";src:url(fonts/octosquares-black-italic.woff2) format("woff2");font-weight:900;font-style:italic;font-display:swap}
+
+:root{
+  color-scheme:light;
+  --bg:#EAF9FF; --line:#00A0E7; --navy:#1D4784; --ink:#1B2A3A; --muted:#4A5B6C;
+  --panel:#EAF9FF; --panel-2:#F4F2EE; --stage:#E4E3E0; --hy:rgba(255,184,51,.7); --hy-base:rgba(255,228,160,.38); --hyc:#FFB833; --warn:#A8520F;
+  --title:"Octosquares","Nunito Sans","Segoe UI",system-ui,sans-serif; --body:"Nunito Sans","Segoe UI",system-ui,sans-serif;
+  --vh:1vh;
+  box-sizing:border-box;
+}
+@supports (height:100dvh){:root{--vh:1dvh}}
+/* DARK MODE — temporarily off. To turn it back on, add class="dark-mode" to the <html> tag
+   and delete the <meta name="color-scheme" content="light"> line in <head>. */
+@media (prefers-color-scheme:dark){:root.dark-mode:not([data-theme="light"]){
+  --bg:#0D1B2C; --navy:#9CC7F2; --ink:#D7E6F5; --muted:#9DB2C7; --panel:#14273C; --panel-2:#1A3049; --stage:#1E3550; --hy-base:rgba(120,78,16,.22); --hy:rgba(168,108,20,.9); --hyc:#A86C14; --warn:#F2A65A}}
+:root.dark-mode[data-theme="dark"]{--bg:#0D1B2C; --navy:#9CC7F2; --ink:#D7E6F5; --muted:#9DB2C7; --panel:#14273C; --panel-2:#1A3049; --stage:#1E3550; --hy-base:rgba(120,78,16,.22); --hy:rgba(168,108,20,.9); --hyc:#A86C14; --warn:#F2A65A}
+:root.dark-mode{color-scheme:light dark}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-snap-type:y mandatory;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.5;-webkit-font-smoothing:antialiased;overflow-x:clip}
+img,svg{max-width:100%}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--navy);outline-offset:3px}
+h1,h2,h3{font-family:var(--title);font-weight:400;color:var(--navy);margin:0;letter-spacing:.01em}
+p{margin:0}
+
+/* the supplied artboard is one tall drawing; every spread shows its own slice, stretched to the screen */
+.spread{position:relative;height:calc(100 * var(--vh));scroll-snap-align:start;scroll-snap-stop:always;}
+#bgfx{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:0;overflow:visible}
+main{position:relative;z-index:1}
+#rail{display:none}
+html.pinned{scroll-snap-type:none;scroll-behavior:auto}
+html.pinned #home{position:fixed;top:0;left:0;right:0;will-change:transform}
+html.pinned #rail{display:block}
+html.pinned #rail div{height:calc(100 * var(--vh));scroll-snap-align:start;scroll-snap-stop:always}
+.abs{position:absolute;left:var(--x);top:var(--y);width:var(--w,auto);height:var(--h,auto)}
+
+.btn{display:flex;align-items:center;font-family:var(--body);font-weight:700;font-size:16px;letter-spacing:.04em;text-transform:uppercase;
+  color:var(--ink);text-decoration:none;padding:0 1.2em;line-height:1.25;cursor:pointer}
+a.btn:hover,button.btn:hover:not(:disabled){background:var(--hyc)}
+a.btn:focus-visible,button.btn:focus-visible{background:var(--hyc)}
+
+/* nav floats over the nav row each slice already draws */
+.nav{position:fixed;top:0;left:0;right:0;height:calc(100 * var(--vh) * 75 / 958 + 1px);z-index:20;pointer-events:none;background:var(--bg);overflow:hidden}
+.nav .navfx{position:absolute;left:0;top:0;width:100%;height:calc(100 * var(--vh));overflow:visible}
+.nav a{pointer-events:auto;position:absolute;top:calc(100 * var(--vh) * 35 / 958);height:calc(100 * var(--vh) * 40 / 958);left:var(--x);transform:translateX(-50%);
+  display:flex;align-items:center;justify-content:center;font-family:var(--body);font-size:16px;font-weight:400;letter-spacing:.04em;text-transform:uppercase;text-decoration:none;color:var(--navy);white-space:nowrap}
+.nav a:hover{text-decoration:underline;text-underline-offset:4px}
+.nav a.signin{transform:none;width:8.958%;color:var(--navy);font-weight:700}
+.nav a.signin:hover,.nav a.signin:focus-visible{background:#00A0E7;text-decoration:none}
+.nav.on-hero a.signin:hover,.nav.on-hero a.signin:focus-visible{background:var(--hyc)}
+.nav .mark{opacity:0;transition:opacity .25s}
+.nav.show-mark .mark,html.subpage .nav .mark{opacity:1}
+.nav a.mark{top:calc(100 * var(--vh) * 20 / 958);height:calc(100 * var(--vh) * 55 / 958 - 9px)}
+.nav .mark svg{height:100%;width:auto;aspect-ratio:128.8/138.7;color:var(--navy);overflow:visible}
+@media (prefers-reduced-motion:reduce){.nav .mark{transition:none}}
+
+/* 1 hero */
+.hero .logo-cell{display:flex;align-items:center;justify-content:center}
+.hero .logo{color:var(--navy);height:68%;width:auto;max-width:80%;aspect-ratio:128.8/138.7;overflow:visible}
+.hero .copy{display:flex;flex-direction:column;justify-content:center}
+.hero h1{font-size:clamp(22px,min(2.5vw,4.3 * var(--vh)),38px);line-height:1.2}
+.hero .copy p{font-size:clamp(14.5px,1.75 * var(--vh) + 2px,17.5px);max-width:46ch;margin-top:.8em}
+.hero .photo{overflow:hidden;background:#2a3a52}
+.hero .photo img{width:100%;height:100%;display:block;object-fit:cover;object-position:50% 18%}
+
+/* 2 how it works */
+.how h2{font-size:clamp(40px,min(5.2vw,9 * var(--vh)),80px);line-height:1.06}
+.how .num{font-family:var(--title);font-size:clamp(32px,6 * var(--vh),52px);line-height:1;color:var(--navy)}
+.how .step h3{font-size:clamp(18px,3 * var(--vh),26px);margin:.15em 0 .3em}
+.how .step p{font-size:clamp(15px,1.85 * var(--vh) + 2px,18px);max-width:34ch}
+.how .step-item{position:absolute;inset:0;opacity:0;transform:translateY(36px);transition:opacity .4s ease,transform .5s cubic-bezier(.5,0,.2,1);pointer-events:none}
+.how .step-item.past{transform:translateY(-36px)}
+.how .step-item.on{opacity:1;transform:none;pointer-events:auto;transition-delay:.08s}
+.how .steps-instant .step-item{transition:none}
+.how .step-item.all{right:auto;left:-55.5%;width:220%;display:flex;flex-direction:column;justify-content:center}
+.how .all ol{list-style:none;margin:0;padding:0;display:grid;gap:clamp(8px,1.6 * var(--vh),16px)}
+.how .all li{display:grid;grid-template-columns:2.4em 34px minmax(140px,12em) 1fr;column-gap:14px;align-items:start;padding-bottom:clamp(8px,1.6 * var(--vh),16px);border-bottom:1px dotted var(--line)}
+.how .all li:last-child{border-bottom:0;padding-bottom:0}
+.how .all .num{font-size:clamp(20px,3 * var(--vh),28px);line-height:1}
+.how .all .icon{width:28px}
+.how .all h3{font-size:clamp(15px,2.1 * var(--vh),19px);margin:0;line-height:1.25}
+.how .all p{font-size:clamp(13px,1.55 * var(--vh) + 1px,15.5px);line-height:1.45;max-width:none}
+.how .step-head{display:flex;align-items:center;gap:16px}
+.how .icon{width:clamp(30px,5 * var(--vh),46px);height:auto;color:var(--navy)}
+.how .step-icon{margin-top:clamp(18px,3.6 * var(--vh),36px)}
+.how .step-icon .icon{width:clamp(64px,11 * var(--vh),112px);stroke-width:1.1}
+@media (prefers-reduced-motion:reduce){.how .step-item{transition:opacity .2s}.how .step-item,.how .step-item.past{transform:none}}
+.how .dot{background:none;border:0;padding:0;cursor:pointer;height:16px;margin-top:-8px}
+.how .dot::after{content:"";position:absolute;left:0;top:7px;height:3px;width:50%;background:var(--navy);transform:scaleX(0);transform-origin:left;transition:transform .3s}
+.how .dot[aria-current="true"]::after{transform:none}
+.how .dot:hover::after{transform:none;opacity:.35}
+.how .dot[aria-current="true"]:hover::after{opacity:1}
+.how .more{justify-content:center;padding:0 .6em;white-space:nowrap}
+
+/* 3 truck builder */
+.builder .copy{display:flex;flex-direction:column;justify-content:center}
+.builder .copy h2{text-box:trim-start cap alphabetic}
+.builder .copy .lede{text-box:trim-end cap alphabetic}
+.builder h2{max-width:21ch;font-size:clamp(22px,min(2.7vw,4 * var(--vh)),40px);line-height:1.15}
+.builder .lede{margin-top:.7em;line-height:1.45;max-width:none;font-size:clamp(14.5px,1.75 * var(--vh) + 2px,17px)}
+.builder .lede strong{display:block;font-family:var(--body);font-weight:700;font-size:20px;line-height:1.3;color:var(--navy);margin-bottom:.25em}
+.shot{display:flex;align-items:flex-start}
+.shot img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;border-radius:8px;box-shadow:0 22px 44px -26px rgba(20,40,70,.55)}
+.app{display:flex;flex-direction:column;background:var(--panel);border:1px solid #c9ccd0;box-shadow:0 18px 40px -24px rgba(20,40,70,.45);font-size:12px;color:var(--ink)}
+.app header{display:flex;justify-content:space-between;align-items:center;padding:6px 10px;border-bottom:1px solid #e3e3e3;font-weight:700;font-size:11px}
+.app header span:last-child{font-size:10px;background:var(--panel-2);padding:2px 8px;border-radius:3px}
+.app .body{flex:1;min-height:0;display:grid;grid-template-columns:1fr 190px}
+.app .stage{background:var(--stage);position:relative;overflow:hidden;min-height:0}
+.app .stage svg{position:absolute;inset:0;width:100%;height:100%}
+.app aside{padding:8px 12px;display:flex;flex-direction:column;gap:7px;border-left:1px solid #e3e3e3;overflow:auto}
+.app label{display:block;font-size:10.5px;color:var(--muted)}
+.app select,.app input{width:100%;font:inherit;font-size:12px;padding:3px 6px;border:1px solid #cfd3d8;border-radius:3px;background:var(--panel);color:var(--ink)}
+.app .dims{display:grid;grid-template-columns:repeat(3,1fr);gap:4px}
+.app .status{background:var(--panel-2);border-left:3px solid #6aa6dc;padding:5px 8px;font-size:11px;line-height:1.4}
+.app .status.warn{border-left-color:#E0A33A}
+.app .status b{display:block;font-size:11.5px}
+.app .readout{font-size:11px;line-height:1.45}
+.app footer{display:flex;justify-content:center;gap:6px;padding:5px;border-top:1px solid #e3e3e3}
+.app footer button{font:inherit;font-size:10.5px;border:1px solid #d5d8dc;background:var(--panel);color:var(--ink);padding:2px 9px;border-radius:3px;cursor:pointer}
+.app footer button[aria-pressed="true"]{background:#1D4784;color:#EAF9FF;border-color:#1D4784}
+
+/* 4 subscribe */
+.sub .now{container-type:size;display:flex;align-items:center;justify-content:center;text-align:center;font-family:var(--title);line-height:1.02;color:var(--navy)}
+.sub .now span{font-size:min(22.5cqw,25.5cqh)}
+.sub .banner{background:#1D4784;color:#EAF9FF;font-family:var(--title);font-size:clamp(20px,min(2.4vw,4.2 * var(--vh)),36px);display:flex;align-items:center;padding:0 1.6%}
+.sub .includes{display:flex;align-items:center;font-family:var(--body);font-weight:800;font-size:clamp(15px,2.1 * var(--vh),19px);letter-spacing:.42em;text-transform:uppercase;color:var(--navy)}
+.sub .ricon{display:flex;align-items:center;justify-content:center;color:var(--navy)}
+.sub .ricon svg{width:clamp(30px,5.2 * var(--vh),52px);height:auto}
+.sub .cell{display:flex;align-items:center;padding:0 1.2%}
+.sub .cell h3{font-size:clamp(16px,min(1.75vw,3.1 * var(--vh)),26px);line-height:1.22}
+.sub .cell p{font-size:clamp(13.5px,min(1vw,1.7 * var(--vh)) + 2px,16.5px);line-height:1.45}
+
+/* 5 closing */
+.close .card{display:flex;flex-direction:column;justify-content:flex-end;padding-bottom:calc(1.6 * var(--vh))}
+.close .card h2{font-size:clamp(18px,min(2vw,3.6 * var(--vh)),30px);line-height:1.22}
+.close .links{list-style:none;margin:0;padding:0;font-size:clamp(12.5px,1.35 * var(--vh) + 2px,14.5px);line-height:1.45}
+.close .links a{color:var(--line);text-decoration:none}.close .links a:hover{text-decoration:underline}
+
+
+/* ---------- pages ---------- */
+[hidden]{display:none!important}
+html.subpage{scroll-snap-type:none}
+html.subpage #bgfx,html.subpage .nav .navfx{display:none}
+.ndeco{display:none;position:absolute;pointer-events:none}
+html.subpage .ndeco{display:block}
+.nd-l,.nd-r{top:calc(100 * var(--vh) * 35 / 958);height:calc(100 * var(--vh) * 40 / 958)}
+.nd-l{left:11.389%;width:8.958%}.nd-r{left:79.653%;width:8.958%}
+.nd-rule{left:0;right:0;bottom:0;height:1.25px;background:var(--line)}
+.nav .plus,.pfoot .plus{top:calc(100 * var(--vh) * 28 / 958);width:14px;height:14px}
+.plus::before,.plus::after{content:"";position:absolute;background:var(--line)}
+.plus::before{left:6.5px;top:0;width:1.25px;height:14px}.plus::after{top:6.5px;left:0;height:1.25px;width:14px}
+.hb-bg{background:repeating-linear-gradient(-50deg,rgba(0,160,231,.75) 0 1.3px,transparent 1.3px 6.5px)}
+.hy-bg{background:repeating-linear-gradient(-50deg,var(--hyc) 0 1.6px,transparent 1.6px 5px)}
+.page{display:block;position:relative;z-index:1}
+.page .pbody{position:relative;padding-top:calc(100 * var(--vh) * 75 / 958)}
+.page .pbody.short{min-height:calc(100 * var(--vh) - 116px)}
+.pgrid{position:absolute;inset:0;pointer-events:none}
+.pgrid i{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:repeating-linear-gradient(to bottom,var(--line) 0 2.5px,transparent 2.5px 7.5px)}
+.pgrid i.s{width:1.25px;margin-left:-.6px;background:var(--line)}
+.row{position:relative;display:grid;grid-template-columns:75fr 260fr 286fr 99fr 99fr 282fr 264fr 75fr;padding:72px 0;align-items:start}
+.row.hero-row{padding:clamp(56px,8vh,88px) 0 clamp(56px,9vh,96px);border-bottom:2px solid transparent;background:linear-gradient(to right,transparent 5.208%,var(--line) 5.208%,var(--line) 94.792%,transparent 94.792%) bottom/100% 1.25px no-repeat}
+.row.hero-row.dashed{background:repeating-linear-gradient(to right,var(--line) 0 2.5px,transparent 2.5px 7.5px) bottom/89.6% 2px no-repeat}
+.c-l{grid-column:2/5;padding:0 4.3vw;z-index:1}
+.c-r{grid-column:6/8;padding:0 2.2vw 0 1.2vw}
+.c-r2{grid-column:5/8;margin:0 2vw 0 1.2vw}
+.c-r3{grid-column:5/8;margin:0 2.2vw 0 1.2vw}
+.c-wide{grid-column:2/8;margin:0 3.2vw}
+.c-mid{grid-column:3/7}
+.ptitle{font-size:clamp(28px,2.7vw,42px);line-height:1.18}
+.lede2{font-size:17px;line-height:1.5;margin-top:.4em}
+.page .btn{min-height:46px;justify-content:center;background-color:transparent}
+.band{position:relative;margin:0 5.208%;background:#1D4784;color:#EAF9FF;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 3vw;min-height:84px}
+.band h2{color:#EAF9FF;font-size:clamp(22px,2.2vw,32px)}
+.billing{display:flex;align-items:center;gap:6px;font-size:15px}
+.billing button{font:inherit;color:#EAF9FF;background:transparent;border:1.25px solid rgba(234,249,255,.55);padding:6px 16px;cursor:pointer}
+.billing button[aria-pressed="true"]{background:#EAF9FF;color:#1D4784;border-color:#EAF9FF;font-weight:700}
+.billing .save{margin-left:8px;font-size:14px;opacity:.85}
+.plans{position:relative;display:grid;grid-template-columns:repeat(4,1fr);gap:16px;z-index:1}
+.plans.two{grid-template-columns:1fr 1fr}
+.plan{position:relative;background:var(--panel);border:1.25px solid var(--line);padding:26px 22px 22px;display:flex;flex-direction:column}
+.plan.pop{border:2px solid #1D4784;box-shadow:0 18px 40px -28px rgba(20,40,70,.6)}
+.plan .tag{position:absolute;top:-13px;left:22px;background:#1D4784;color:#EAF9FF;font-size:13px;font-weight:700;padding:3px 10px}
+.plan h3{font-size:22px}
+.plan .price{margin:.4em 0 .2em;color:var(--navy)}
+.plan .amt{font-family:var(--title);font-size:clamp(30px,2.6vw,40px)}
+.plan .per{font-size:16px;margin-left:3px;color:var(--muted)}
+.plan-d{font-size:15.5px;color:var(--muted);min-height:3em}
+.plan ul{list-style:none;margin:16px 0 22px;padding:16px 0 0;border-top:1px dotted var(--line);display:grid;gap:9px;font-size:15.5px;line-height:1.35}
+.plan li{display:flex;gap:8px;align-items:flex-start}
+.ck{width:18px;height:18px;flex:none;color:#1D4784;margin-top:1px}
+.plan .btn{margin-top:auto}
+.split{align-items:start;row-gap:48px}
+.sl-copy{margin-top:56px;padding-left:13.75vw}
+.sl-copy p{font-size:17px;line-height:1.55;max-width:max(20vw,250px);margin-bottom:1em}
+.qb{background:var(--panel);border:1.25px solid #c9ccd0;box-shadow:0 22px 44px -28px rgba(20,40,70,.55);font-size:13.5px;position:relative;z-index:1}
+.qb-top{padding:14px 16px;border-bottom:1px solid #e3e3e3}.qb-top b{display:block;font-size:15px}.qb-top span{color:var(--muted);font-size:13px}
+.qb-alert{margin:12px 16px 4px;padding:8px 10px;background:#FFF4DC;border-left:3px solid #E0A33A;color:#6a4a10;font-size:13px}
+.qb-group{padding:10px 16px;border-bottom:1px dotted #d5d8dc}
+.qb-h{display:flex;justify-content:space-between;font-weight:700;margin-bottom:6px;font-size:13.5px}
+.qb-r{display:flex;justify-content:space-between;gap:12px;padding:3px 0 3px 10px;color:var(--ink)}
+.qb-r span:last-child{white-space:nowrap;font-variant-numeric:tabular-nums}
+.qb-total{display:flex;justify-content:space-between;padding:14px 16px;background:#1D4784;color:#EAF9FF;font-size:15px}
+.qb-note{padding:8px 16px;font-size:12.5px;color:var(--muted)}
+.quote{margin:0 4.3vw 0 4.3vw;padding:0;background:var(--panel);border:1.25px solid var(--line);position:relative;z-index:1}
+.quote .eyebrow{font-size:14px;color:var(--muted);padding:22px 26px 0}
+.quote h3{font-size:24px;padding:4px 26px 0;line-height:1.25}
+.quote blockquote{margin:18px 26px 0}
+.quote .big{font-family:var(--title);color:var(--navy);font-size:clamp(22px,1.9vw,28px);line-height:1.25;margin-bottom:.7em}
+.quote blockquote p:last-child{font-size:16.5px;line-height:1.55}
+.quote figcaption{margin:20px 26px 24px;padding-top:14px;border-top:1px dotted var(--line);font-size:15.5px}
+.costs{background:var(--panel);border:1.25px solid var(--line);padding:24px;position:relative;z-index:1}
+.costs h3{font-size:26px}.costs>p{font-size:16px;color:var(--muted);margin:.3em 0 16px}
+.cost-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px}
+.cost{display:flex;gap:8px;padding:10px;border:1px dotted var(--line);font-size:14px;line-height:1.35}
+.cost b{display:block;font-size:15px}.cost span{color:var(--muted)}
+.cmp{background:var(--panel);border:1.25px solid var(--line);padding:28px 28px 20px;position:relative;z-index:1}
+.cmp-t{font-family:var(--body);font-weight:700;font-size:15px;letter-spacing:.32em;text-transform:uppercase;text-align:center;color:var(--navy);margin-bottom:18px}
+.cmp-scroll{overflow-x:auto}
+.cmp table{width:100%;border-collapse:collapse;min-width:620px}
+.cmp th,.cmp td{padding:14px 16px;border-bottom:1px dotted var(--line);text-align:left;vertical-align:middle}
+.cmp thead th{font-size:14px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;text-align:center;border-bottom:1.25px solid var(--line)}
+.cmp thead th.fd{color:var(--navy)}
+.cmp tbody th b{display:block;font-size:16.5px}.cmp tbody th span{font-weight:400;font-size:15px;color:var(--muted);display:block;margin-top:2px;max-width:62ch}
+.cmp td{text-align:center;width:18%}.cmp td.fd{background:rgba(0,160,231,.08)}
+.cmp td .ck{width:22px;height:22px;display:inline-block}
+.cmp td.na{font-size:14.5px;color:var(--muted)}
+.cmp tbody th span.beta{display:inline;margin-top:0;color:#3d2a05;font-size:11px}
+.beta{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:#FFB833;color:#3d2a05;padding:2px 6px;margin-left:4px;vertical-align:middle}
+.cmp-note{font-size:14px;color:var(--muted);text-align:center;margin-top:16px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.about-hero{display:flex;flex-direction:column;height:calc(100 * var(--vh) - 100 * var(--vh) * 75 / 958)}
+.about-hero .hero-row{flex:none;padding:clamp(28px,5vh,56px) 0 clamp(28px,5vh,56px)}
+.vid{flex:1;min-height:0;margin:0 5.208%;background:#0D1B2C;position:relative;z-index:1}
+.vid video{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 40%}
+.photo-ph{margin:0 5.208%;height:clamp(300px,46vh,520px);background:#D9D9D9;display:flex;align-items:flex-end;padding:18px 22px;position:relative;z-index:1}
+.photo-ph span{font-size:14px;color:#6b6b6b}
+.faq{position:relative;z-index:1;background:var(--panel);border:1.25px solid var(--line)}
+.faq details{border-bottom:1px dotted var(--line)}.faq details:last-child{border-bottom:0}
+.faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;padding:16px 20px;font-size:17px;color:var(--ink)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary:hover{color:var(--navy)}
+.faq .pm{position:relative;width:14px;height:14px;flex:none}
+.faq .pm::before,.faq .pm::after{content:"";position:absolute;background:var(--navy);transition:transform .25s}
+.faq .pm::before{left:6px;top:0;width:2px;height:14px}.faq .pm::after{top:6px;left:0;height:2px;width:14px}
+.faq details[open] .pm::before{transform:scaleY(0)}
+.faq details p{padding:0 20px 18px;font-size:17px;line-height:1.55;max-width:60ch}
+.guides{list-style:none;margin:0;padding:clamp(40px,7vh,80px) 0;display:grid;gap:22px;position:relative;z-index:1}
+.guides .btn{justify-content:flex-start;padding:0 24px;min-height:50px}
+.pfoot{position:relative;height:116px;border-top:1.25px solid var(--line)}
+.pfoot .pf-h{position:absolute;top:0;height:40px;width:8.958%}
+.pfoot .plus{top:46px}
+.pfoot .links{position:absolute;top:8px;list-style:none;margin:0;padding:0;font-size:clamp(12.5px,1.35 * var(--vh) + 2px,14.5px);line-height:1.45}
+.pfoot .links a{color:var(--line);text-decoration:none}.pfoot .links a:hover{text-decoration:underline}
+.pfoot .plus{position:absolute}
+.nav a[aria-current="page"]{text-decoration:underline;text-underline-offset:5px;text-decoration-thickness:1.25px}
+@media (max-width:820px){
+  .ndeco{display:none!important}
+  .page .pbody{padding-top:0}
+  .pgrid{display:none}
+  .row{display:block;padding:40px 20px}
+  .row.hero-row{padding:40px 20px;background:none;border-bottom:1.25px solid var(--line)}
+  .c-l,.c-r,.c-r2,.c-r3,.c-wide,.c-mid{padding:0;margin:0}
+  .c-r{margin-top:16px}
+  .split>*+*{margin-top:32px}
+  .band{margin:0;padding:18px 20px;flex-wrap:wrap}
+  .plans,.plans.two{grid-template-columns:1fr}
+  .sl-copy{margin:20px 0 0;padding:0}
+  .photo-ph{margin:0;height:260px}
+  .about-hero{height:auto}
+  .vid{margin:0;aspect-ratio:16/9}
+  .vid video{object-fit:contain}
+  .pfoot{height:auto;padding:16px 20px 40px;display:flex;gap:40px}
+  .pfoot .pf-h,.pfoot .plus{display:none}
+  .pfoot .links{position:static}
+}
+@media (min-width:821px) and (max-width:1180px){.plans{grid-template-columns:repeat(2,1fr)}}
+
+#loader{position:fixed;inset:0;z-index:19;background:#00498B;display:flex;align-items:center;justify-content:center;transition:opacity .45s ease,visibility 0s linear 0s}
+#loader img{width:min(46vmin,400px);height:auto}
+#loader.done{opacity:0;visibility:hidden;transition:opacity .45s ease,visibility 0s linear .45s}
+#loader.instant{transition:none}
+
+.est-dlg{max-width:min(600px,94vw)}
+.est-dlg header{gap:12px}
+.est-dlg header h2{flex:1}
+.fdt-free{font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--navy);border:1.25px solid var(--line);padding:3px 9px}
+#fdTeaser{text-align:left}
+.fdt-body{padding:20px}
+.fdt-label{display:block;font-size:13px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin:0 0 6px}
+.fdt-row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.fdt-row4{display:grid;grid-template-columns:1fr 1fr;gap:8px 12px}
+#fdTeaser input,#fdTeaser select{width:100%;padding:11px 12px;border:1.25px solid var(--line);border-radius:0;font:inherit;font-size:16px;background:var(--panel);color:var(--ink);margin-bottom:12px}
+#fdTeaser input:focus,#fdTeaser select:focus{outline:2px solid var(--navy);outline-offset:0}
+.fdt-dimnote{font-size:15px;color:var(--muted);margin:-2px 0 16px}
+.fdt-btn{width:100%;min-height:52px;justify-content:center;gap:10px;border:0;font-size:16px}
+.fdt-btn:disabled{opacity:.5;cursor:default}
+.fdt-limit{font-size:14px;color:var(--muted);margin-top:10px}
+.fdt-msg{font-size:15px;margin-top:10px;min-height:18px;color:var(--muted)}
+.fdt-msg.warn{color:var(--warn)}
+.fdt-msg a{color:var(--navy);font-weight:700}
+.fdt-result{display:none;padding:26px 20px;text-align:center}
+.fdt-lane{font-size:15px;color:var(--muted);margin-bottom:12px}
+.fdt-cost{font-family:var(--title);font-size:clamp(38px,7vw,54px);line-height:1;color:var(--navy)}
+.fdt-cost.range{font-size:clamp(26px,6vw,40px)}
+.fdt-costlabel{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-top:10px}
+.fdt-specs{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.fdt-spec{font-size:14px;color:var(--ink);border:1.25px solid var(--line);padding:4px 10px}
+.fdt-spec.hot{color:var(--warn);border-color:var(--warn)}
+.fdt-notice{flex-basis:100%;font-size:14px;color:var(--warn);margin-top:6px}
+.fdt-cta{display:inline-flex;margin-top:22px;padding:0 22px;min-height:50px;gap:10px;text-decoration:none}
+.fdt-gate{padding:30px 24px;text-align:center}
+.fdt-gate .fdt-kicker{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.fdt-gate h3{font-size:26px;margin:6px 0 10px}
+.fdt-gate p{font-size:16px;color:var(--muted);max-width:40ch;margin:0 auto}
+.type-ghost{visibility:hidden}
+.tl{display:block;white-space:nowrap}
+.type-caret{display:inline-block;width:.5em;height:1.05em;margin-left:1px;vertical-align:-.15em;background:var(--navy);animation:caret .9s steps(1) infinite}
+@keyframes caret{50%{opacity:0}}
+/* dialogs */
+dialog{border:1px solid var(--line);background:var(--bg);color:var(--ink);padding:0;max-width:min(560px,92vw);width:100%}
+dialog::backdrop{background:rgba(13,27,44,.5)}
+dialog header{display:flex;justify-content:space-between;align-items:center;padding:14px 18px;border-bottom:1px solid var(--line)}
+dialog h2{font-size:20px}
+dialog .x{background:none;border:0;font-size:20px;color:var(--navy);cursor:pointer;line-height:1}
+dialog .content{padding:18px}
+.est{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.est label{font-size:13.5px;color:var(--muted);display:block}
+.est input{width:100%;font:inherit;padding:6px 8px;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+.breakdown{margin-top:16px;border-top:1px dotted var(--line)}
+.breakdown div{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px dotted var(--line);font-size:15.5px}
+.breakdown .total{font-family:var(--title);font-size:20px;color:var(--navy);border-bottom:1px solid var(--line)}
+.fine{font-size:13.5px;color:var(--muted);margin:10px 0 0}
+
+/* phones and narrow windows: the artboard can't stretch to a portrait screen, so content stacks in normal flow */
+@media (max-width:820px){
+  #bgfx,.nav .navfx{display:none}
+  html{scroll-snap-type:y proximity;scroll-padding-top:45px}
+  .spread{min-height:calc(100 * var(--vh) - 45px)!important}
+  .spread{height:auto;min-height:calc(100 * var(--vh));background:none;border-top:1px solid var(--line);padding:76px 20px 40px;display:flex;flex-direction:column;gap:18px}
+  .abs{position:relative;left:auto;top:auto;width:auto;height:auto}
+  .nav{position:sticky;height:auto;background:var(--bg);border-bottom:1px solid var(--line);display:grid;grid-template-columns:repeat(2,1fr) 34px repeat(2,1fr) 64px;align-items:center;pointer-events:auto;padding:0 6px}
+  .nav a{position:static;transform:none;height:44px;font-size:9.5px;letter-spacing:.04em;white-space:normal;text-align:center}
+  .nav a.signin{white-space:nowrap;letter-spacing:0}
+  .nav .signin{width:auto}
+  .nav a.mark{top:auto;height:44px;padding:6px 0}
+  .spread{padding-top:36px}
+  .hero .logo-cell{justify-content:flex-start}
+  .hero .logo{width:120px;height:auto;max-width:none}
+  .hero .photo{height:260px}
+  .btn{min-height:44px;background:repeating-linear-gradient(-45deg,var(--hy) 0 1.4px,transparent 1.4px 6px),var(--hy-base)}
+  .how .dots{display:none}
+  .how .step-item.all{display:none}
+  .how .step-item{position:relative;inset:auto;opacity:1;transform:none;margin-bottom:26px;pointer-events:auto}
+  .sub .ricon{justify-content:flex-start;margin-bottom:-8px}
+  .shot img{border-radius:6px}
+  .how .dot{position:relative;flex:1;height:16px;margin:0;left:auto;top:auto}
+  .how .dot::before{content:"";position:absolute;left:0;right:0;top:8px;border-top:2px dotted var(--line)}
+  .builder .app{height:auto}
+  .app .body{grid-template-columns:1fr}.app .stage{height:220px}.app aside{border-left:0;border-top:1px solid #e3e3e3}
+  .sub .banner{padding:18px}
+  .sub .now{font-size:34px;container-type:normal}
+  .sub .now span{font-size:inherit}
+  .sub .srow{display:flex;flex-direction:column;gap:6px;border-top:1px dotted var(--line);padding-top:14px}
+  .sub .cell{padding:0}
+  .close .card{padding:0;gap:12px}
+  .close .footer-links{display:flex;gap:40px;margin-top:auto}
+  .fdt-row2{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<div id="loader" aria-hidden="true"><img src="img/loading-logomark.gif" alt="" width="400" height="400"></div>
+<script>window.fdLoading=true;window.fdT0=Date.now();</script>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><g id="mark"><g fill="currentColor"><g> <g> <path d="M18.97,160.17h5.36v-7.95h4.93v7.95h9.19V166H16.87c-0.16,0-3.94-3.94-3.94-3.94v-12.72h4.89v9.69L18.97,160.17z"/> <path d="M16.87,128.17l-3.76,3.76l-0.18,0.23v14.87h25.52v-5.83h-9.19v-4.01l9.19-3.4v-5.62H36.7l-8.42,3.22l-3.22-3.22H16.87z M22.86,134.03l1.47,1.43v5.74h-6.51v-6.03l1.15-1.14H22.86z"/> <path d="M18.96,120.03h5.37v-8.35h4.93v8.35h4.31v-11.22h4.88v17.05H16.87c-0.16,0-3.94-3.94-3.94-3.94v-13.16h4.89v10.14 L18.96,120.03z"/> <path d="M17.82,93.3h-4.89v13.2h4.89v-3.68h15.75v3.68h4.88V93.3h-4.88v3.69H17.82V93.3z"/> <polygon points="22.01,76.57 19.28,76.57 17.82,78.09 17.82,83.63 19.27,85.13 32.1,85.13 33.57,83.63 33.57,78.01 32.16,76.57 29.26,76.57 29.26,81.55 24.2,81.55 24.33,70.72 34.11,70.72 38.45,75.09 38.45,86.65 34.11,90.99 17.27,90.99 12.93,86.65 12.93,75.06 17.27,70.72 22.02,70.72 "/> <path d="M12.93,54.98h11.4v7.58h-11.4v5.84h25.52v-5.84h-9.19v-7.58h9.19v-5.87H12.93V54.98z"/> <path d="M12.93,46.8h4.89v-6.82h20.63v-5.87H17.82V27.3h-4.89V46.8z"/> <polygon points="17.82,135.17 17.82,134.03 18.97,134.03 "/> <path d="M62.23,27.48H43.29V53h18.94l4.34-4.34V31.82L62.23,27.48z M60.74,46.62l-1.54,1.5H49.13V32.37H59.2l1.54,1.49V46.62z"/> <path d="M135.61,39.88l5.58-10.61v-1.79h-5.62l-5.42,11.4h-5.65v-11.4l-5.86,0V53l5.86,0v-9.19h6.85l4.6,9.19h5.76v-1.79 L135.61,39.88z"/> <polygon points="107.84,36.57 107.84,33.84 106.32,32.37 100.8,32.37 99.28,33.84 99.28,46.64 100.8,48.11 106.32,48.11 107.84,46.64 107.84,43.91 113.69,43.91 113.69,48.66 109.35,53 97.77,53 97.76,52.99 93.43,48.66 93.43,31.82 97.77,27.48 109.35,27.48 110.35,28.48 110.38,28.51 113.69,31.82 113.69,36.57 "/> <path d="M77.18,33.5v5.38h8.35v4.93h-8.35v4.31H88.4V53H71.35V31.42c0-0.16,3.94-3.94,3.94-3.94h13.16v4.89H78.3L77.18,33.5z"/> <g> <rect x="43.29" y="56.4" width="70.4" height="23.28"/> <rect x="43.29" y="84.47" width="70.4" height="23.28"/> <rect x="43.29" y="112.54" width="23.28" height="53.46"/> <rect x="118.41" y="56.4" width="23.28" height="51.35"/> <rect x="71.35" y="112.54" width="70.34" height="24.11"/> <rect x="71.35" y="141.43" width="70.34" height="24.57"/> </g> </g> </g></g></g></defs></svg>
+<svg id="bgfx" aria-hidden="true">
+  <defs>
+    <pattern id="hb" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><rect x="0" y="0" width="1.3" height="8" fill="#00A0E7" fill-opacity=".75"/></pattern>
+    <pattern id="hy" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(40)"><rect x="0" y="0" width="1.7" height="6" style="fill:var(--hyc)"/></pattern>
+  </defs>
+  <g id="fxAll"><g id="fxR"></g><g id="fxL" stroke="#00A0E7" fill="none"></g></g>
+</svg>
+<nav class="nav" id="nav" aria-label="Main">
+  <svg class="navfx" aria-hidden="true"><use href="#fxAll"/></svg>
+  <span class="ndeco nd-l hb-bg" aria-hidden="true"></span><span class="ndeco nd-r hb-bg" aria-hidden="true"></span><span class="ndeco nd-rule" aria-hidden="true"></span><span class="ndeco plus" style="left:4.6%"></span><span class="ndeco plus" style="left:94.5%"></span>
+  <a href="#how" style="--x:27.083%">How it works</a>
+  <a href="#/pricing" style="--x:39.722%">Pricing</a>
+  <a href="#top" class="mark" style="--x:50%" aria-label="FreightDeck home"><svg viewBox="12.9 27.3 128.8 138.7"><use href="#mark"/></svg></a>
+  <a href="#/about" style="--x:59.792%">About</a>
+  <a href="#/resources" style="--x:71.250%">Resources</a>
+  <a href="https://app.thefreightdeck.com/" target="_blank" rel="noopener" class="signin" style="--x:79.653%">Sign in</a>
+</nav>
+<div id="rail" aria-hidden="true"><div></div><div></div><div></div><div></div><div></div></div>
+<main id="home">
+
+<section class="spread hero" id="top">
+  <div class="logo-cell abs" style="--x:5.208%;--y:7.829%;--w:18.056%;--h:26.722%"><svg class="logo" viewBox="12.9 27.3 128.8 138.7" role="img" aria-label="FreightDeck"><use href="#mark"/></svg></div>
+  <div class="copy abs" style="--x:9.514%;--y:36.639%;--w:31.250%;--h:26.827%">
+    <h1>From freight list to bid, in&nbsp;minutes.</h1>
+    <p>Enter your oversize load — we price the whole permitted move across every state on the route: linehaul and fuel, permits and escorts. Free, no login.</p>
+  </div>
+  <div class="photo abs" style="--x:50%;--y:7.829%;--w:44.792%;--h:55.637%"><img src="img/hero-truck-bridge.jpg" alt="A truck blurs past at speed across a steel truss bridge at dusk" width="1100" height="1154"></div>
+  <a href="#" class="btn abs" data-open="estimator" style="--x:76.458%;--y:65.553%;--w:18.333%;--h:5.219%">Try the oversize cost estimator</a>
+</section>
+
+<section class="spread how" id="how">
+  <h2 class="abs" style="--x:14.861%;--y:15.916%">How it<br>Works</h2>
+  <div class="step abs" style="--x:51.944%;--y:16.126%;--w:25.000%;--h:61.571%" id="steps" aria-live="polite">
+      <div class="step-item on" data-i="0">
+        <div class="step-head"><span class="num">1.</span></div>
+        <h3>Drop it in</h3>
+        <p>A screenshot (our favorite), a BOL, or an Excel project list, even a messy one.</p>
+        <div class="step-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11M7.5 9.5 12 14l4.5-4.5"/><path d="M4 14v5h16v-5"/></svg></div>
+      </div>
+      <div class="step-item" data-i="1" aria-hidden="true">
+        <div class="step-head"><span class="num">2.</span></div>
+        <h3>We read every piece</h3>
+        <p>Pulls dimensions and weights off the page and converts the units if they're off.</p>
+        <div class="step-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3H6v18h6"/><path d="M13 3l5 5v4"/><path d="M13 3v5h5"/><circle cx="16.5" cy="16.5" r="3"/><path d="m18.7 18.7 2.3 2.3"/></svg></div>
+      </div>
+      <div class="step-item" data-i="2" aria-hidden="true">
+        <div class="step-head"><span class="num">3.</span></div>
+        <h3>FreightDeck builds the trailer list</h3>
+        <p>Determines how many trucks the project takes and matches each piece to the right trailer and configuration — maximizing trailer utilization so you're not paying for empty deck.</p>
+        <div class="step-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="6" height="6"/><rect x="11" y="5" width="7" height="8"/><path d="M2 13h20v2.5H2z"/><circle cx="6" cy="18.5" r="1.7"/><circle cx="16" cy="18.5" r="1.7"/><circle cx="20" cy="18.5" r="1.7"/></svg></div>
+      </div>
+      <div class="step-item" data-i="3" aria-hidden="true">
+        <div class="step-head"><span class="num">4.</span></div>
+        <h3>Prices the move</h3>
+        <p>Every oversize or overweight piece runs through the full cost estimator: permits, escorts, surveys, and the rest.</p>
+        <div class="step-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M14.4 8.6c-.4-.8-1.3-1.3-2.4-1.3-1.4 0-2.4.7-2.4 1.8s1 1.5 2.4 1.8 2.4.7 2.4 1.8-1 1.9-2.4 1.9c-1.2 0-2.1-.5-2.5-1.4M12 5.8v1.5M12 14.6v1.5"/></svg></div>
+      </div>
+      <div class="step-item" data-i="4" aria-hidden="true">
+        <div class="step-head"><span class="num">5.</span></div>
+        <h3>Send the bid</h3>
+        <p>Export a clean, ready-to-send Excel bid sheet. In minutes.</p>
+        <div class="step-icon"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.5l7 2.5 2.5 7z"/><path d="M21 3 10 13"/></svg></div>
+      </div>
+      <div class="step-item all" data-i="5" aria-hidden="true">
+        <h3 class="sr">All five steps</h3>
+        <ol><li><span class="num">1.</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v11M7.5 9.5 12 14l4.5-4.5"/><path d="M4 14v5h16v-5"/></svg><h3>Drop it in</h3><p>A screenshot (our favorite), a BOL, or an Excel project list, even a messy one.</p></li><li><span class="num">2.</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3H6v18h6"/><path d="M13 3l5 5v4"/><path d="M13 3v5h5"/><circle cx="16.5" cy="16.5" r="3"/><path d="m18.7 18.7 2.3 2.3"/></svg><h3>We read every piece</h3><p>Pulls dimensions and weights off the page and converts the units if they're off.</p></li><li><span class="num">3.</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="7" width="6" height="6"/><rect x="11" y="5" width="7" height="8"/><path d="M2 13h20v2.5H2z"/><circle cx="6" cy="18.5" r="1.7"/><circle cx="16" cy="18.5" r="1.7"/><circle cx="20" cy="18.5" r="1.7"/></svg><h3>FreightDeck builds the trailer list</h3><p>Determines how many trucks the project takes and matches each piece to the right trailer and configuration — maximizing trailer utilization so you're not paying for empty deck.</p></li><li><span class="num">4.</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 3h12v18l-3-2-3 2-3-2-3 2z"/><path d="M14.4 8.6c-.4-.8-1.3-1.3-2.4-1.3-1.4 0-2.4.7-2.4 1.8s1 1.5 2.4 1.8 2.4.7 2.4 1.8-1 1.9-2.4 1.9c-1.2 0-2.1-.5-2.5-1.4M12 5.8v1.5M12 14.6v1.5"/></svg><h3>Prices the move</h3><p>Every oversize or overweight piece runs through the full cost estimator: permits, escorts, surveys, and the rest.</p></li><li><span class="num">5.</span><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 3 3 10.5l7 2.5 2.5 7z"/><path d="M21 3 10 13"/></svg><h3>Send the bid</h3><p>Export a clean, ready-to-send Excel bid sheet. In minutes.</p></li></ol>
+      </div>
+  </div>
+  <a class="btn more abs" href="#/pricing/superload" style="--x:75.972%;--y:84.084%;--w:11.181%;--h:5.236%">Learn more</a>
+  <div class="dots" role="tablist" aria-label="Steps" id="dots"><button type="button" class="dot abs" style="--x:14.444%;--y:92.670%;--w:7.917%"></button><button type="button" class="dot abs" style="--x:27.083%;--y:92.670%;--w:7.917%"></button><button type="button" class="dot abs" style="--x:39.722%;--y:92.670%;--w:7.917%"></button><button type="button" class="dot abs" style="--x:52.361%;--y:92.670%;--w:7.917%"></button><button type="button" class="dot abs" style="--x:65.000%;--y:92.670%;--w:7.917%"></button></div>
+</section>
+
+<section class="spread builder" id="builder">
+  <div class="copy abs" style="--x:10.694%;--y:31.042%;--w:62.500%;--h:23.229%">
+    <h2>Introducing our custom truck builder</h2>
+    <p class="lede"><strong>See the load before you book it.</strong>Every quote drops straight into a 3D load view, so you can confirm the freight actually fits the trailer — deck, height, and overhang — before you commit.</p>
+  </div>
+  <a href="https://app.thefreightdeck.com/" target="_blank" rel="noopener" class="btn abs" style="--x:25.139%;--y:60.729%;--w:24.861%;--h:5.208%">Try it for free</a>
+  <div class="shot abs" style="--x:50%;--y:55.729%;--w:48.611%;--h:41.875%">
+    <img src="img/truck-builder-3d-view.jpg" alt="FreightDeck 3D View: a load on an RGN trailer with trailer type, freight details and view controls" width="1400" height="831">
+  </div>
+</section>
+
+<section class="spread sub" id="pricing">
+  <div class="now abs" data-fit style="--x:0.000%;--y:7.796%;--w:15.903%;--h:23.181%"><span>SUBS<br>CRIBE<br>NOW</span></div>
+  <div class="banner abs" style="--x:15.903%;--y:7.796%;--w:84.097%;--h:23.181%">For accurate, comprehensive estimates</div>
+  <p class="includes abs" style="--x:4.583%;--y:30.977%;--w:76.389%;--h:12.474%">Every plan includes:</p>
+  <div class="srow"><div class="ricon abs" style="--x:0%;--y:43.451%;--w:15.903%;--h:15.177%"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/><path d="M12.4 8.4c-.3-.6-1-1-1.9-1-1 0-1.8.5-1.8 1.4s.8 1.1 1.8 1.3 1.9.6 1.9 1.5-.8 1.4-1.9 1.4c-.9 0-1.6-.4-1.9-1.1M10.5 6.4v1M10.5 13.6v1"/></svg></div><div class="cell abs" style="--x:15.903%;--y:43.451%;--w:24.653%;--h:15.177%"><h3>The whole cost picture, one search</h3></div>
+    <div class="cell abs" style="--x:40.556%;--y:43.451%;--w:43.611%;--h:15.177%"><p>Per-state permit fees, escort counts and costs, police escorts, route surveys, engineering — every dollar priced, not flagged, all the way up to superload size. Built from DOT sources: the numbers you'd spend 30 minutes assembling by hand. RateAssist adds a starting truck rate on top, so the first draft of your quote is done before your coffee's poured.</p></div></div>
+  <div class="srow"><div class="ricon abs" style="--x:0%;--y:58.628%;--w:15.903%;--h:15.177%"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 20 7.5v9L12 21l-8-4.5v-9z"/><path d="M4 7.5 12 12l8-4.5M12 12v9"/></svg></div><div class="cell abs" style="--x:15.903%;--y:58.628%;--w:24.653%;--h:15.177%"><h3>Truck Builder</h3></div>
+    <div class="cell abs" style="--x:40.556%;--y:58.628%;--w:43.611%;--h:15.177%"><p>Drop your pieces on a trailer and get an axle-legal build with dimensions rolled straight into the quote. No more napkin math on overhang.</p></div></div>
+  <div class="srow"><div class="ricon abs" style="--x:0%;--y:73.805%;--w:15.903%;--h:15.177%"><svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6v18h12V7z"/><path d="M14 3v4h4"/><path d="m9 14 2 2 4-4"/></svg></div><div class="cell abs" style="--x:15.903%;--y:73.805%;--w:24.653%;--h:15.177%"><h3>Send-ready output</h3></div>
+    <div class="cell abs" style="--x:40.556%;--y:73.805%;--w:43.611%;--h:15.177%"><p>Save every quote, re-run lanes in one click, and export customer-ready PDFs with your logo on them. Your book of quotes becomes an asset.</p></div></div>
+  <a href="#/pricing" class="btn abs" style="--x:84.167%;--y:30.977%;--w:15.833%;--h:5.198%">See pricing</a>
+</section>
+
+<section class="spread close" id="about">
+  <div class="card abs" style="--x:23.264%;--y:33.361%;--w:19.861%;--h:33.130%">
+    <h2>See our FAQs and learn more about FreightDeck</h2>
+  </div>
+  <a href="#/about" class="btn abs" style="--x:23.264%;--y:66.491%;--w:19.861%;--h:4.829%">About</a>
+  <div class="card abs" id="resources" style="--x:56.875%;--y:33.361%;--w:19.583%;--h:33.130%">
+    <h2>Explore our helpful guides to permit rules and more</h2>
+  </div>
+  <a href="#/resources" class="btn abs" style="--x:56.875%;--y:66.491%;--w:19.583%;--h:4.829%">Resources</a>
+  <div class="footer-links">
+    <ul class="links abs" style="--x:22.431%;--y:88.416%"><li><a href="#/pricing">Pricing</a></li><li><a href="https://app.thefreightdeck.com/" target="_blank" rel="noopener">Sign in</a></li><li><a href="#/resources">Guides</a></li></ul>
+    <ul class="links abs" style="--x:28.611%;--y:88.416%"><li><a href="#/about/faq">FAQs</a></li><li><a href="https://thefreightdeck.com/privacy.html" target="_blank" rel="noopener">Privacy policy</a></li><li><a href="mailto:support@thefreightdeck.com">Contact</a></li></ul>
+  </div>
+</section>
+
+</main>
+<main class="page" id="page-pricing" hidden aria-labelledby="pr-t">
+ <div class="pbody"><div class="pgrid" aria-hidden="true"><i class="s" style="left:5.208%"></i><i style="left:23.264%"></i><i style="left:43.125%"></i><i class="s" style="left:50%"></i><i style="left:56.875%"></i><i style="left:76.458%"></i><i class="s" style="left:94.792%"></i></div>
+  <section class="row hero-row">
+    <h1 id="pr-t" class="ptitle c-l">Quote oversize like you've been doing it 30 years.</h1>
+    <p class="c-r lede2">Permit costs, escort costs, police, surveys, engineering — every cost, every state, one search. Quote even when the load gets huge. Plus RateAssist: a starting number for the truck.</p>
+  </section>
+  <div class="band"><h2>Plans</h2>
+    <div class="billing" role="group" aria-label="Billing period"><button type="button" data-bill="m" aria-pressed="true">Monthly</button><button type="button" data-bill="a" aria-pressed="false">Annual</button><span class="save">2 months free</span></div></div>
+  <section class="row"><div class="plans c-wide"><article class="plan">
+        <h3>Starter</h3>
+        <p class="price"><span class="amt" data-m="40" data-a="400">$40</span><span class="per" data-m="/mo" data-a="/yr">/mo</span></p>
+        <p class="plan-d">For owner-operators quoting a few loads a month.</p>
+        <ul><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>25 searches a month</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Every cost, every state</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>RateAssist starting truck rate</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Saved quotes</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Email support</li></ul>
+        <a href="https://app.thefreightdeck.com/" target="_blank" rel="noopener" class="btn hy-bg">Subscribe</a>
+      </article><article class="plan pop"><span class="tag">Most popular</span>
+        <h3>Pro</h3>
+        <p class="price"><span class="amt" data-m="100" data-a="1000">$100</span><span class="per" data-m="/mo" data-a="/yr">/mo</span></p>
+        <p class="plan-d">For brokers and dispatchers quoting every day.</p>
+        <ul><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>100 searches a month</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Everything in Starter</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Project Freight: drop in a BOL or list</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>3D Truck Builder</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Customer-ready PDFs with your logo</li></ul>
+        <a href="https://app.thefreightdeck.com/" target="_blank" rel="noopener" class="btn hy-bg">Subscribe</a>
+      </article><article class="plan">
+        <h3>Power</h3>
+        <p class="price"><span class="amt" data-m="200" data-a="2000">$200</span><span class="per" data-m="/mo" data-a="/yr">/mo</span></p>
+        <p class="plan-d">For heavy-haul desks running superloads.</p>
+        <ul><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>300 searches a month</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Everything in Pro</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Superload line items and timelines</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Multi-piece truck builds</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Priority support</li></ul>
+        <a href="https://app.thefreightdeck.com/" target="_blank" rel="noopener" class="btn hy-bg">Subscribe</a>
+      </article><article class="plan">
+        <h3>Enterprise</h3>
+        <p class="price"><span class="amt">Let's talk</span></p>
+        <p class="plan-d">For carriers and brokerages with custom lanes and volume.</p>
+        <ul><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Custom search volume</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Your own rate data in RateAssist</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Single sign-on</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Onboarding for your team</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Dedicated account manager</li></ul>
+        <a href="mailto:support@thefreightdeck.com?subject=FreightDeck%20Enterprise" class="btn hy-bg">Contact us</a>
+      </article></div></section>
+  <div class="band"><h2>Team plans</h2></div>
+  <section class="row"><div class="plans two c-mid"><article class="plan">
+        <h3>Team</h3>
+        <p class="price"><span class="amt" data-m="500" data-a="5000">$500</span><span class="per" data-m="/mo" data-a="/yr">/mo</span></p>
+        <p class="plan-d">Up to 10 seats sharing one quote book.</p>
+        <ul><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>1,000 shared searches a month</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Everything in Power</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Shared saved quotes and lanes</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Admin controls and usage reports</li></ul>
+        <a href="mailto:support@thefreightdeck.com?subject=FreightDeck%20API" class="btn hy-bg">Start a team</a>
+      </article>
+      <article class="plan">
+        <h3>Team+</h3>
+        <p class="price"><span class="amt">Let's talk</span></p>
+        <p class="plan-d">More than 10 seats, or several offices.</p>
+        <ul><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Custom seats and volume</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Everything in Team</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Single sign-on</li><li><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>Dedicated onboarding</li></ul>
+        <a href="mailto:support@thefreightdeck.com?subject=FreightDeck%20API%20Enterprise" class="btn hy-bg">Contact us</a>
+      </article></div></section>
+  <section class="row split" id="superload">
+    <div class="c-l"><h2 class="ptitle">A superload, priced line by line.</h2>
+      <div class="sl-copy"><p>This is a live 380,000&nbsp;lb superload, Houston to Denver. FreightDeck breaks out every state permit, the pilot and pole cars, engineering and bridge review, bucket truck, and route survey — then layers on the timeline, blackout dates, and daylight-only restrictions.</p>
+      <p>Every number runs on our own verified per-state data, so the estimate holds up on the hard loads other tools can't price.</p></div></div>
+    <div class="qb c-r2" role="group" aria-label="Sample superload quote">
+      <div class="qb-top"><b>FreightDeck Quote Builder</b><span>Houston, TX → Denver, CO · 380,000 lb · 16′ 4″ W × 15′ 10″ H</span></div>
+      <div class="qb-alert">Superload in TX, OK and CO — route survey and engineering required</div>
+      <div class="qb-group"><div class="qb-h"><span>Permits & regulatory</span><b>$18,940 – $21,300</b></div><div class="qb-r"><span>Texas superload permit</span><span>$4,860</span></div><div class="qb-r"><span>Oklahoma superload permit</span><span>$3,120</span></div><div class="qb-r"><span>Colorado superload permit</span><span>$5,410</span></div><div class="qb-r"><span>Route survey (3 states)</span><span>$2,750 – $4,200</span></div><div class="qb-r"><span>Engineering & bridge review</span><span>$2,800 – $3,710</span></div></div><div class="qb-group"><div class="qb-h"><span>Escorts & support</span><b>$31,600 – $38,450</b></div><div class="qb-r"><span>Pilot cars (front & rear)</span><span>$9,840 – $11,200</span></div><div class="qb-r"><span>Height pole car</span><span>$4,920 – $5,600</span></div><div class="qb-r"><span>Police escorts</span><span>$11,400 – $14,850</span></div><div class="qb-r"><span>Bucket truck (utility lines)</span><span>$5,440 – $6,800</span></div></div><div class="qb-group"><div class="qb-h"><span>Truck & fuel</span><b>$46,200 – $52,900</b></div><div class="qb-r"><span>Linehaul, 13-axle perimeter (RateAssist)</span><span>$39,800 – $45,600</span></div><div class="qb-r"><span>Fuel</span><span>$6,400 – $7,300</span></div></div>
+      <div class="qb-group"><div class="qb-h"><span>Timeline & restrictions</span><b>9 – 12 days</b></div>
+        <div class="qb-r"><span>Daylight-only travel</span><span>All states</span></div>
+        <div class="qb-r"><span>Holiday blackout</span><span>Nov 26 – Nov 29</span></div>
+        <div class="qb-r"><span>Permit processing</span><span>10 – 15 business days</span></div></div>
+      <div class="qb-total"><span>Estimated move</span><b>$96,740 – $112,650</b></div>
+      <p class="qb-note">Sample estimate for illustration.</p>
+    </div>
+  </section>
+  <section class="row split">
+    <figure class="quote c-l">
+      <p class="eyebrow">From the field</p>
+      <h3>A four-figure error, caught before the quote went out.</h3>
+      <blockquote><p class="big">“That decision saved us between $4,000 and $7,000.”</p>
+      <p>FreightDeck flagged an error in our original estimate that would have turned a profitable move into a money-losing project. We corrected the pricing, won the business, and moved the load. It didn't just make us faster — it protected our profitability.</p></blockquote>
+      <figcaption><b>Desmond Clark</b> — Bear Creek Logistics</figcaption>
+    </figure>
+    <div class="costs c-r3"><h3>Every cost on the move.</h3><p>What FreightDeck prices for every state on the route.</p><div class="cost-grid"><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Permit fees</b><span>Every state on the route, at superload size too.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Pilot & escort cars</b><span>Front, rear and chase, counted per state rules.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Height pole cars</b><span>Added when the load gets tall.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Police escorts</b><span>Where states require them, with hourly rates.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Route surveys</b><span>Priced per state, not just flagged.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Engineering review</b><span>Bridge and structural analysis costs.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Bucket trucks</b><span>Utility line lifts for over-height loads.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Linehaul</b><span>A starting truck rate from RateAssist.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Fuel</b><span>Estimated for the actual routed miles.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Travel restrictions</b><span>Daylight-only, curfews and weekend rules.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Blackout dates</b><span>Holiday travel bans along the route.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Transit timeline</b><span>Realistic days on the road, start to finish.</span></div></div><div class="cost"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><div><b>Tolls & fees</b><span>Oversize tolls and administrative fees.</span></div></div></div></div>
+  </section>
+  <section class="row">
+    <div class="cmp c-wide"><h2 class="cmp-t">FreightDeck vs the other guys</h2>
+      <div class="cmp-scroll"><table><thead><tr><th scope="col"><span class="sr">Feature</span></th><th scope="col" class="fd">FreightDeck</th><th scope="col">Oversize.io</th></tr></thead><tbody><tr><th scope="row"><b>Every oversize cost, per state</b><span>Permits, escorts, police, surveys, engineering — priced in dollars, detailed even at superload size. 50 states + Canada, from DOT sources.</span></th><td class="c fd"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span class="sr">Yes</span></td><td class="c"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span class="sr">Yes</span></td></tr><tr><th scope="row"><b>RateModel — a starting truck rate <span class="beta">Beta</span></b><span>A custom algorithm built from real loads hands you a first number for most trailer types. Adjust to suit — you make the call.</span></th><td class="c fd"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span class="sr">Yes</span></td><td class="c na">Not advertised</td></tr><tr><th scope="row"><b>Project Freight</b><span>Drop a BOL, spec sheet, or photo — FreightDeck reads it and figures out the trailer you need.</span></th><td class="c fd"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span class="sr">Yes</span></td><td class="c na">Not advertised</td></tr><tr><th scope="row"><b>See the freight on the trailer</b><span>Available for most trailer types — visualize exactly what your freight looks like on the trailer, and spot potential load issues fast.</span></th><td class="c fd"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span class="sr">Yes</span></td><td class="c na">Not advertised</td></tr><tr><th scope="row"><b>Multi-piece truck builds</b><span>Axle-legal builds with dimensions rolled into the quote.</span></th><td class="c fd"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span class="sr">Yes</span></td><td class="c na">Axle-legal only</td></tr><tr><th scope="row"><b>Customer-ready quote PDFs</b></th><td class="c fd"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span class="sr">Yes</span></td><td class="c"><svg class="ck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg><span class="sr">Yes</span></td></tr></tbody></table></div>
+      <p class="cmp-note">This comparison column reflects publicly advertised features as of June 2026. Everyone prices permits — we're the only ones who also hand you a starting number for the truck.</p>
+    </div>
+  </section>
+ </div>
+ <footer class="pfoot"><span class="plus" style="left:4.6%"></span><span class="plus" style="left:94.5%"></span>
+    <span class="hb-bg pf-h" style="left:12.639%"></span><span class="hb-bg pf-h" style="left:79.653%"></span>
+    <ul class="links" style="left:22.431%"><li><a href="#/pricing">Pricing</a></li><li><a href="https://app.thefreightdeck.com/" target="_blank" rel="noopener">Sign in</a></li><li><a href="#/resources">Guides</a></li></ul>
+    <ul class="links" style="left:28.611%"><li><a href="#/about/faq">FAQs</a></li><li><a href="https://thefreightdeck.com/privacy.html" target="_blank" rel="noopener">Privacy policy</a></li><li><a href="mailto:support@thefreightdeck.com">Contact</a></li></ul>
+  </footer>
+</main>
+<main class="page" id="page-about" hidden aria-labelledby="ab-t">
+ <div class="pbody"><div class="pgrid" aria-hidden="true"><i class="s" style="left:5.208%"></i><i style="left:23.264%"></i><i style="left:43.125%"></i><i class="s" style="left:50%"></i><i style="left:56.875%"></i><i style="left:76.458%"></i><i class="s" style="left:94.792%"></i></div>
+  <div class="about-hero">
+    <section class="row hero-row"><h1 id="ab-t" class="ptitle c-l">Meet the industry vet behind the app</h1></section>
+    <div class="vid"><video controls playsinline preload="none" poster="img/founder-video-poster.jpg" aria-label="Meet the founder of FreightDeck"><source src="video/freightdeck-founder.mp4" type="video/mp4"></video></div>
+  </div>
+  <section class="row split faq-row" id="faq">
+    <h2 class="ptitle c-l">Frequently Asked Questions</h2>
+    <div class="faq c-r3"><details><summary>What is FreightDeck?<span class="pm" aria-hidden="true"></span></summary><p>A heavy-haul quoting tool. Give it your oversize or overweight load and route, and it prices the whole permitted move — permits, escorts, surveys, engineering, linehaul and fuel — across every state on the way.</p></details><details><summary>Who is FreightDeck for?<span class="pm" aria-hidden="true"></span></summary><p>Brokers, dispatchers, carriers and project-cargo teams who quote oversize and overweight freight and are tired of building every estimate by hand.</p></details><details><summary>How does the heavy haul cost estimator work?<span class="pm" aria-hidden="true"></span></summary><p>Enter the load dimensions, weight and route. FreightDeck checks each state's rules, works out which permits, escorts and surveys the move triggers, and prices each one in dollars.</p></details><details><summary>What makes FreightDeck more complete than other tools?<span class="pm" aria-hidden="true"></span></summary><p>Most tools flag what a move needs. FreightDeck prices it — down to police escorts, bucket trucks and engineering at superload size — and adds a starting truck rate on top.</p></details><details><summary>Where does the cost data come from?<span class="pm" aria-hidden="true"></span></summary><p>Per-state DOT sources, verified and maintained by our team, plus RateAssist's rate model built from real loads.</p></details><details><summary>How accurate is RateAssist?<span class="pm" aria-hidden="true"></span></summary><p>It's a starting number for most trailer types, built from real loads. Treat it as a first draft — you adjust it to your lane and make the call.</p></details><details><summary>Can I paste a screenshot or spreadsheet instead of typing?<span class="pm" aria-hidden="true"></span></summary><p>Yes. Drop in a screenshot, a BOL or an Excel project list and FreightDeck reads the pieces for you, even from a messy file.</p></details><details><summary>What counts as a search?<span class="pm" aria-hidden="true"></span></summary><p>Pricing one load on one route counts as one search. Re-opening a saved quote doesn't use another.</p></details><details><summary>What happens if I run out of searches?<span class="pm" aria-hidden="true"></span></summary><p>You can keep working with your saved quotes, and upgrade or add searches at any time.</p></details><details><summary>How much does FreightDeck cost?<span class="pm" aria-hidden="true"></span></summary><p>Plans start at $40 a month. See the pricing page for every plan, including team plans.</p></details><details><summary>Can I try it before paying?<span class="pm" aria-hidden="true"></span></summary><p>Yes — the oversize cost estimator on the home page is free with no login.</p></details><details><summary>Can I cancel anytime?<span class="pm" aria-hidden="true"></span></summary><p>Yes. Monthly plans can be cancelled at any time and stay active until the end of the billing period.</p></details></div>
+  </section>
+ </div>
+ <footer class="pfoot"><span class="plus" style="left:4.6%"></span><span class="plus" style="left:94.5%"></span>
+    <span class="hb-bg pf-h" style="left:12.639%"></span><span class="hb-bg pf-h" style="left:79.653%"></span>
+    <ul class="links" style="left:22.431%"><li><a href="#/pricing">Pricing</a></li><li><a href="https://app.thefreightdeck.com/" target="_blank" rel="noopener">Sign in</a></li><li><a href="#/resources">Guides</a></li></ul>
+    <ul class="links" style="left:28.611%"><li><a href="#/about/faq">FAQs</a></li><li><a href="https://thefreightdeck.com/privacy.html" target="_blank" rel="noopener">Privacy policy</a></li><li><a href="mailto:support@thefreightdeck.com">Contact</a></li></ul>
+  </footer>
+</main>
+<main class="page" id="page-resources" hidden aria-labelledby="rs-t">
+ <div class="pbody short"><div class="pgrid" aria-hidden="true"><i class="s" style="left:5.208%"></i><i style="left:23.264%"></i><i style="left:43.125%"></i><i class="s" style="left:50%"></i><i style="left:56.875%"></i><i style="left:76.458%"></i><i class="s" style="left:94.792%"></i></div>
+  <section class="row hero-row dashed"><h1 id="rs-t" class="ptitle c-l">Stay tuned for our online course — coming soon</h1></section>
+  <section class="row"><ul class="guides c-mid"><li><a href="https://thefreightdeck.com/permits/" target="_blank" rel="noopener" class="btn hy-bg">Permit rules by state</a></li><li><a href="https://thefreightdeck.com/guides/" target="_blank" rel="noopener" class="btn hy-bg">Heavy haul guides</a></li><li><a href="https://thefreightdeck.com/corridors/" target="_blank" rel="noopener" class="btn hy-bg">Data center corridors</a></li></ul></section>
+ </div>
+ <footer class="pfoot"><span class="plus" style="left:4.6%"></span><span class="plus" style="left:94.5%"></span>
+    <span class="hb-bg pf-h" style="left:12.639%"></span><span class="hb-bg pf-h" style="left:79.653%"></span>
+    <ul class="links" style="left:22.431%"><li><a href="#/pricing">Pricing</a></li><li><a href="https://app.thefreightdeck.com/" target="_blank" rel="noopener">Sign in</a></li><li><a href="#/resources">Guides</a></li></ul>
+    <ul class="links" style="left:28.611%"><li><a href="#/about/faq">FAQs</a></li><li><a href="https://thefreightdeck.com/privacy.html" target="_blank" rel="noopener">Privacy policy</a></li><li><a href="mailto:support@thefreightdeck.com">Contact</a></li></ul>
+  </footer>
+</main>
+<dialog id="dlg-estimator" class="est-dlg" aria-labelledby="estTitle">
+  <header><h2 id="estTitle">Oversize Cost Estimator</h2><span class="fdt-free">Free · no login</span><button class="x" data-close aria-label="Close">×</button></header>
+  <div id="fdTeaser">
+  <div class="fdt-body" id="fdtForm">
+   <div class="fdt-row2">
+    <div><label class="fdt-label" for="fdtOrigin">Origin</label><input id="fdtOrigin" type="text" placeholder="Dallas, TX" autocomplete="off"></div>
+    <div><label class="fdt-label" for="fdtDest">Destination</label><input id="fdtDest" type="text" placeholder="Atlanta, GA" autocomplete="off"></div>
+   </div>
+   <span class="fdt-label" id="fdtDimL">Load dimensions</span>
+   <div class="fdt-row4" role="group" aria-labelledby="fdtDimL">
+    <input id="fdtLen" type="number" step="0.5" min="0" max="90" placeholder="Length ft" aria-label="Length in feet">
+    <input id="fdtWid" type="number" step="0.5" min="0" max="16" placeholder="Width ft" aria-label="Width in feet">
+    <input id="fdtHgt" type="number" step="0.5" min="0" max="14" placeholder="Height ft" aria-label="Height in feet">
+    <input id="fdtWt" type="number" step="1000" min="0" max="150000" placeholder="Weight lb" aria-label="Weight in pounds">
+   </div>
+   <label class="fdt-label" for="fdtTrl">Trailer</label>
+   <select id="fdtTrl">
+    <option value="auto" selected>Auto — we pick the trailer</option>
+    <option value="flatbed">Flatbed</option>
+    <option value="stepdeck">Step deck</option>
+    <option value="lowboy">Lowboy / double drop</option>
+    <option value="rgn">RGN (removable gooseneck)</option>
+   </select>
+   <p class="fdt-dimnote">Enter whatever’s oversize — we work out the permits and escorts from there.</p>
+   <button class="btn hy-bg fdt-btn" id="fdtGo" type="button">Price my move <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></button>
+   <p class="fdt-limit">Free quote prices up to 90′ long · 16′ wide · 14′ tall · 150,000 lb. Bigger? Sign in for complex pricing.</p>
+   <div class="fdt-msg" id="fdtMsg" role="status" aria-live="polite"></div>
+  </div>
+  <div class="fdt-result" id="fdtResult">
+   <div class="fdt-lane" id="fdtLane"></div>
+   <div class="fdt-cost" id="fdtCost">—</div>
+   <div class="fdt-costlabel" id="fdtCostLabel">All-in cost to move / no markup</div>
+   <div class="fdt-specs" id="fdtSpecs"></div>
+   <a class="btn hy-bg fdt-cta" id="fdtCta" href="https://app.thefreightdeck.com" target="_blank" rel="noopener">See the full breakdown — free account <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+  </div>
+  </div>
+</dialog>
+
+<dialog id="dlg-msg" aria-labelledby="msgTitle">
+  <header><h2 id="msgTitle"></h2><button class="x" data-close aria-label="Close">×</button></header>
+  <div class="content"><p id="msgText" style="margin:0"></p></div>
+</dialog>
+
+
+<script>
+/* loading screen: plays the logo animation on first load and whenever you move between pages */
+(function(){
+  var L=document.getElementById('loader'), img=L.querySelector('img'), blob=null, url=null, timer;
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  fetch(img.src).then(function(r){return r.blob()}).then(function(b){blob=b}).catch(function(){});   /* kept so the animation can restart from frame one */
+  function hide(){L.classList.remove('instant');L.classList.add('done');window.fdLoading=false}
+  window.fdShowLoader=function(ms){
+    clearTimeout(timer);window.fdLoading=true;
+    if(blob){if(url)URL.revokeObjectURL(url);url=URL.createObjectURL(blob);img.src=url}   /* fresh URL restarts the animation */
+    L.classList.add('instant');L.classList.remove('done');
+    timer=setTimeout(hide,reduce?450:(ms||1300));
+  };
+  function first(){var wait=Math.max(0,(reduce?500:1600)-(Date.now()-window.fdT0));timer=setTimeout(hide,wait)}
+  if(document.readyState==='complete')first();else addEventListener('load',first);
+})();
+/* simple page routing: #/pricing, #/about, #/resources; everything else is the home spreads */
+(function(){
+  var pages={pricing:'Pricing',about:'About',resources:'Resources'}, home=document.getElementById('home');
+  var homeIds=['top','how','builder','pricing','about'];
+  function route(){
+    var m=location.hash.match(/^#\/(\w+)(?:\/([\w-]+))?/), name=m&&pages[m[1]]?m[1]:'home', sub=m&&m[2], prev=window.fdRoute;
+    window.fdRoute=name;
+    document.documentElement.classList.toggle('subpage',name!=='home');
+    home.hidden=name!=='home';
+    for(var k in pages)document.getElementById('page-'+k).hidden=k!==name;
+    [].forEach.call(document.querySelectorAll('.nav a'),function(a){a.removeAttribute('aria-current');if(a.getAttribute('href')==='#/'+name)a.setAttribute('aria-current','page')});
+    document.title=name==='home'?'FreightDeck — From freight list to bid, in minutes':'FreightDeck — '+pages[name];
+    if(name!=='about'){var v=document.querySelector('#page-about video');v&&v.pause()}
+    else{var v=document.querySelector('#page-about video');
+      /* turn the embedded clip into a blob URL the first time About opens, so seeking works everywhere */
+      if(v&&!v.src){var t=document.getElementById('fdVideo');if(t){var bin=atob(t.textContent.trim()),u=new Uint8Array(bin.length);for(var i=0;i<bin.length;i++)u[i]=bin.charCodeAt(i);
+        v.src=URL.createObjectURL(new Blob([u],{type:'video/mp4'}));v.preload='metadata';t.textContent=''}}}
+    if(prev&&prev!==name&&window.fdShowLoader)fdShowLoader();
+    dispatchEvent(new Event('fdroute'));
+    if(name!=='home'&&sub&&document.getElementById(sub)){var el=document.getElementById(sub),nav=document.getElementById('nav').offsetHeight;scrollTo(0,el.getBoundingClientRect().top+scrollY-nav)}
+    else if(name!=='home'){scrollTo(0,0);if(prev&&prev!==name){var h=document.querySelector('#page-'+name+' h1');h&&h.setAttribute('tabindex','-1');h&&h.focus({preventScroll:true})}}
+    else{var id=location.hash.slice(1),i=homeIds.indexOf(id);
+      var H=document.querySelector('.spread').offsetHeight||innerHeight;
+      if(id==='how'&&window.fdSteps)fdSteps.set(0,false);
+      scrollTo(0,i>0?i*H:(prev&&prev!=='home'?0:scrollY));}
+  }
+  addEventListener('hashchange',route);
+  window.fdRouteInit=route;
+  /* billing toggle */
+  document.addEventListener('click',function(e){
+    var b=e.target.closest('[data-bill]');if(!b)return;var k=b.dataset.bill;
+    [].forEach.call(document.querySelectorAll('[data-bill]'),function(x){x.setAttribute('aria-pressed',x===b)});
+    [].forEach.call(document.querySelectorAll('#page-pricing [data-m]'),function(el){var v=el.dataset[k];el.textContent=el.classList.contains('amt')?'$'+Number(v).toLocaleString('en-US'):v});
+  });
+})();
+(function(){
+  /* nav mark appears after hero logo leaves view */
+  var nav=document.getElementById('nav'), heroLogo=document.querySelector('.hero .logo');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(e){nav.classList.toggle('show-mark',!e[0].isIntersecting)},{threshold:0.01}).observe(heroLogo);
+  } else nav.classList.add('show-mark');
+
+  /* how it works: steps advance with scrolling while the heading stays put */
+  var stepBox=document.getElementById('steps'), items=[].slice.call(stepBox.querySelectorAll('.step-item')), dots=document.getElementById('dots'), cur=0;
+  function setStep(i,animate){
+    cur=Math.max(0,Math.min(items.length-1,i));
+    if(!animate){stepBox.classList.add('steps-instant')}
+    items.forEach(function(el,j){el.classList.toggle('on',j===cur);el.classList.toggle('past',j<cur);el.setAttribute('aria-hidden',j===cur?'false':'true')});
+    var all=cur===items.length-1;
+    [].forEach.call(dots.children,function(b,j){var on=all||j===cur;b.setAttribute('aria-current',on?'true':'false');b.setAttribute('aria-selected',j===cur)});
+    if(!animate){stepBox.offsetWidth;stepBox.classList.remove('steps-instant')}
+  }
+  [].forEach.call(dots.children,function(b,i){
+    b.setAttribute('role','tab');b.setAttribute('aria-label','Step '+(i+1)+': '+items[i].querySelector('h3').textContent);
+    b.onclick=function(){setStep(i,true)};
+  });
+  window.fdSteps={get:function(){return cur},set:setStep,count:items.length};
+  setStep(0,false);
+
+  /* oversize cost estimator — logic from thefreightdeck.com (fdt-js) */
+  (function(){
+  var API='https://app.thefreightdeck.com/api/try-quote';
+  function el(id){return document.getElementById(id);}
+  function esc(s){return String(s==null?'':s);}
+  function fmt(n){return '$'+Math.round(n).toLocaleString('en-US');}
+  function used(){try{return parseInt(localStorage.getItem('fd_try_od')||'0',10);}catch(e){return 0;}}
+  function bump(){try{localStorage.setItem('fd_try_od',String(used()+1));}catch(e){}}
+  var FDT_BOUNDS={length:[90,"90' long"],width:[16,"16' wide"],height:[14,"14' tall"],weight:[150000,'150,000 lbs']};
+  function fdBound(v,name){if(v===''||v==null)return null;var n=Number(v),b=FDT_BOUNDS[name];if(!isFinite(n)||n<=b[0])return null;return 'That\u2019s superload territory. Sign in for more complex pricing, or keep it under 90\u2032 long \u00b7 16\u2032 wide \u00b7 14\u2032 tall \u00b7 150,000 lb.';}
+  function fdChk(v,name,max){if(v===''||v==null)return null;var n=Number(v);if(!isFinite(n)||n<0)return name.charAt(0).toUpperCase()+name.slice(1)+' must be a positive number.';return null;}
+  var card=el('fdTeaser'); if(!card) return;
+  var live=/(^|\.)thefreightdeck\.com$/.test(location.hostname);
+  function say(t,kind){var m=el('fdtMsg');m.className='fdt-msg'+(kind?' '+kind:'');m.textContent=t;return m}
+  function render(j){
+    el('fdtLane').textContent=esc(j.lane);
+    var costEl=el('fdtCost');
+    if(j.teased){ costEl.textContent='Log in free to see'; costEl.className='fdt-cost range'; el('fdtCostLabel').textContent='Superload-class move \u00b7 full cost shown in the app'; }
+    else if(j.is_range && j.subtotal_max>j.subtotal_min){
+      costEl.textContent=fmt(j.subtotal_min)+' – '+fmt(j.subtotal_max); costEl.className='fdt-cost range';
+      el('fdtCostLabel').textContent='Estimated cost range / no markup';
+    } else {
+      costEl.textContent=fmt(j.subtotal_min!=null?j.subtotal_min:j.all_in); costEl.className='fdt-cost';
+      el('fdtCostLabel').textContent='All-in cost to move / no markup';
+    }
+    var n=(j.permit_states||j.states||0), box=el('fdtSpecs'); box.textContent='';
+    function chip(t,hot){var c=document.createElement('span');c.className='fdt-spec'+(hot?' hot':'');c.textContent=t;box.appendChild(c)}
+    if(j.trailer)chip((j.trailer_auto?'Priced on: ':'Your trailer: ')+esc(j.trailer));
+    chip(j.miles+' mi');chip(n+' permit state'+(n===1?'':'s'));
+    (j.requires||[]).forEach(function(rq){chip(esc(rq),rq==='route survey'||rq==='police escort'||rq==='superload'||rq==='pole cars')});
+    (j.notices||[]).forEach(function(t){var d=document.createElement('div');d.className='fdt-notice';d.textContent='\u26a0 '+t;box.appendChild(d);});
+    el('fdtForm').style.display='none'; el('fdtResult').style.display='block';
+  }
+  function gate(){
+    el('fdtForm').style.display='none'; el('fdtResult').style.display='none';
+    if(el('fdtGate'))return;
+    var g=document.createElement('div');g.id='fdtGate';g.className='fdt-gate';
+    g.innerHTML='<p class="fdt-kicker">That’s your free look</p><h3>Log in for 2 more — free.</h3>'
+      +'<p>Create a free account for two more free searches and the full app — the complete per-state breakdown, saved quotes, and every tool.</p>'
+      +'<a href="https://app.thefreightdeck.com" target="_blank" rel="noopener" class="btn hy-bg fdt-cta">Log in for 2 more free</a>';
+    card.appendChild(g);
+  }
+  async function run(){
+    var o=(el('fdtOrigin').value||'').trim(), d=(el('fdtDest').value||'').trim();
+    if(!o||!d){say('Enter an origin and destination.','warn');return;}
+    var payload={mode:'od',origin:o,destination:d,lengthFt:el('fdtLen').value,widthFt:el('fdtWid').value,heightFt:el('fdtHgt').value,weightLbs:el('fdtWt').value,trailer:(el('fdtTrl')||{}).value||'auto'};
+    if(!payload.lengthFt&&!payload.widthFt&&!payload.heightFt&&!payload.weightLbs){say('Enter at least one dimension or the weight.','warn');return;}
+    var _bad=fdChk(payload.lengthFt,'length',400)||fdChk(payload.widthFt,'width',60)||fdChk(payload.heightFt,'height',60)||fdChk(payload.weightLbs,'weight',2000000); if(_bad){say(_bad,'warn');return;}
+    var _ob=fdBound(payload.lengthFt,'length')||fdBound(payload.widthFt,'width')||fdBound(payload.heightFt,'height')||fdBound(payload.weightLbs,'weight');
+    if(_ob){var m=say(_ob+' ','warn');var a=document.createElement('a');a.href='https://app.thefreightdeck.com';a.target='_blank';a.rel='noopener';a.textContent='Log in free';m.appendChild(a);return;}
+    if(used()>=1){gate();return;}
+    el('fdtGo').disabled=true; say('Routing the move and pricing permits…');
+    try{
+      var r=await fetch(API,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+      var j=await r.json();
+      if(!r.ok||j.error){say(j.error||'Could not price that.','warn');el('fdtGo').disabled=false;return;}
+      say(''); render(j); bump(); el('fdtGo').disabled=false;
+    }catch(e){
+      el('fdtGo').disabled=false;
+      if(!live){var m2=say('Live pricing connects once this page is hosted on thefreightdeck.com. ','warn');var a2=document.createElement('a');a2.href='https://thefreightdeck.com/';a2.target='_blank';a2.rel='noopener';a2.textContent='Try it on the current site';m2.appendChild(a2);}
+      else say('Something went wrong. Try again.','warn');
+    }
+  }
+  el('fdtGo').addEventListener('click',run);
+  ['fdtOrigin','fdtDest','fdtLen','fdtWid','fdtHgt','fdtWt'].forEach(function(id){var e=el(id);if(e)e.addEventListener('keydown',function(ev){if(ev.key==='Enter')run();});});
+  })();
+
+  /* dialogs */
+  var msgs={
+    signin:['Sign in','Accounts aren\'t connected on this test site.'],
+    pricing:['Pricing','Plan pricing will appear here. Every plan includes cost search, Truck Builder and send-ready output.'],
+    about:['About FreightDeck','FreightDeck turns a freight list into a priced, permitted, send-ready bid. FAQs will live here.'],
+    resources:['Resources','State-by-state permit guides and escort rules will live here.'],
+    info:['Coming soon','This page isn\'t part of the test site yet.']
+  };
+  document.addEventListener('click',function(e){
+    var o=e.target.closest('[data-open]');
+    if(o){e.preventDefault();var k=o.dataset.open;
+      if(k==='estimator'){document.getElementById('dlg-estimator').showModal();return}
+      document.getElementById('msgTitle').textContent=msgs[k][0];document.getElementById('msgText').textContent=msgs[k][1];
+      document.getElementById('dlg-msg').showModal();return}
+    if(e.target.closest('[data-close]'))e.target.closest('dialog').close();
+    if(e.target.tagName==='DIALOG')e.target.close();
+  });
+})();
+
+/* background linework: each spread's lines and hatches (from the supplied artboard) morph into the next as you scroll */
+(function(){
+  var FX={"L":[[[0.6444,0.8451,0.684,0.8451,1,1.25],[0.3083,0.8451,0.3479,0.8451,1,1.25],[0.6493,0.7533,0.6889,0.7533,1,1.25],[0.3132,0.7533,0.3528,0.7533,1,1.25],[0.0525,0.0783,0.0525,1.0,0,1.25],[0.9483,0.0783,0.9483,1.0,0,1.25],[0.5004,0.0783,0.5004,1.0,0,1.25],[0.5694,0.0783,0.5694,1.0,1,2.0],[0.4319,0.0783,0.4319,1.0,1,2.0],[0.2333,0.0783,0.2333,1.0,1,2.0],[0.7653,0.0783,0.7653,1.0,1,2.0],[0.8865,0.0397,0.8865,0.0783,0,1.25],[0.9484,0.0303,0.9484,0.0491,0,1.25],[0.9424,0.0393,0.9549,0.0393,0,1.25],[0.7213,0.8351,0.7213,0.8539,0,1.25],[0.3852,0.8351,0.3852,0.8539,0,1.25],[0.684,0.8451,0.7646,0.8451,0,1.25],[0.3479,0.8451,0.4285,0.8451,0,1.25],[0.5687,0.7533,0.6493,0.7533,0,1.25],[0.2326,0.7533,0.3132,0.7533,0,1.25],[0.644,0.7432,0.644,0.762,0,1.25],[0.3079,0.7432,0.3079,0.762,0,1.25],[0.0518,0.0303,0.0518,0.0491,0,1.25],[0.0458,0.0393,0.0583,0.0393,0,1.25],[0.1143,0.0397,0.1143,0.0783,0,1.25],[0.9479,0.0789,0.9736,0.0789,0,1.25],[0.0264,0.0789,0.0521,0.0789,0,1.25],[0.8868,0.0,0.8868,0.0397,1,2.0],[0.1146,0.0,0.1146,0.0397,1,2.0],[0.9736,0.0793,1.0,0.0793,1,2.0],[-0.0,0.0793,0.0264,0.0793,1,2.0],[0.0521,0.3466,0.9479,0.3466,1,2.0],[0.0521,0.6357,0.9479,0.6357,1,2.0],[0.0521,0.9228,0.9479,0.9228,1,2.0],[0.0521,0.3674,0.9479,0.3674,1,2.0],[0.0521,0.6566,0.9479,0.6566,1,2.0],[0.0521,0.9436,0.9479,0.9436,1,2.0],[0.0521,0.0789,0.9479,0.0789,0,1.25]],[[0.184,0.9267,0.2236,0.9267,1,2.0],[0.1444,0.9263,0.184,0.9263,0,1.25],[0.4368,0.9267,0.4764,0.9267,1,2.0],[0.3972,0.9263,0.4368,0.9263,0,1.25],[0.6896,0.9267,0.7292,0.9267,1,2.0],[0.65,0.9263,0.6896,0.9263,0,1.25],[0.3104,0.9267,0.35,0.9267,1,2.0],[0.2708,0.9263,0.3104,0.9263,0,1.25],[0.5632,0.9267,0.6028,0.9267,1,2.0],[0.5236,0.9263,0.5632,0.9263,0,1.25],[0.0525,0.0785,0.0525,0.9476,0,1.25],[0.9483,0.0785,0.9483,0.9476,0,1.25],[0.1146,0.0785,0.1146,0.9476,1,2.0],[0.1285,0.0785,0.1285,0.9476,1,2.0],[0.7465,0.0785,0.7465,0.9476,1,2.0],[0.7604,0.0785,0.7604,0.9476,1,2.0],[0.6201,0.0785,0.6201,0.9476,1,2.0],[0.634,0.0785,0.634,0.9476,1,2.0],[0.4938,0.0785,0.4938,0.9476,1,2.0],[0.5076,0.0785,0.5076,0.9476,1,2.0],[0.3674,0.0785,0.3674,0.9476,1,2.0],[0.3812,0.0785,0.3812,0.9476,1,2.0],[0.241,0.0785,0.241,0.9476,1,2.0],[0.2549,0.0785,0.2549,0.9476,1,2.0],[0.8729,0.0785,0.8729,0.9476,1,2.0],[0.8868,0.0785,0.8868,0.9476,1,2.0],[0.0521,0.9473,0.9479,0.9473,0,1.25],[0.0521,0.0792,0.9479,0.0792,0,1.25]],[[0.5005,0.0479,0.5005,1.0,0,1.25],[0.7508,0.0781,0.7508,1.0,0,1.25],[0.2508,0.0781,0.2508,1.0,0,1.25],[0.0,0.5434,1.0,0.5434,0,1.25],[-0.0,0.0788,1.0,0.0788,0,1.25],[0.0931,0.3104,0.0931,0.5437,1,2.0],[0.1583,0.0792,0.1583,0.3125,1,2.0],[0.0,0.3115,0.25,0.3115,1,2.0],[0.0,0.1969,0.1576,0.1969,1,2.0],[0.0924,0.4281,0.25,0.4281,1,2.0],[0.5924,0.3104,0.5924,0.5437,1,2.0],[0.6576,0.0792,0.6576,0.3125,1,2.0],[0.4993,0.3115,0.7493,0.3115,1,2.0],[0.4993,0.1969,0.6569,0.1969,1,2.0],[0.5917,0.4281,0.7493,0.4281,1,2.0],[0.3431,0.3104,0.3431,0.5437,1,2.0],[0.4083,0.0792,0.4083,0.3125,1,2.0],[0.25,0.3115,0.5,0.3115,1,2.0],[0.25,0.1969,0.4076,0.1969,1,2.0],[0.3424,0.4281,0.5,0.4281,1,2.0],[0.8424,0.3104,0.8424,0.5437,1,2.0],[0.9076,0.0792,0.9076,0.3125,1,2.0],[0.7493,0.3115,0.9993,0.3115,1,2.0],[0.7493,0.1969,0.9069,0.1969,1,2.0],[0.8417,0.4281,0.9993,0.4281,1,2.0],[0.3431,0.774,0.3431,1.0,1,2.0],[0.4083,0.5427,0.4083,0.776,1,2.0],[0.25,0.775,0.5,0.775,1,2.0],[0.25,0.6604,0.4076,0.6604,1,2.0],[0.3424,0.8917,0.5,0.8917,1,2.0],[0.0938,0.774,0.0938,1.0,1,2.0],[0.159,0.5427,0.159,0.776,1,2.0],[0.0007,0.775,0.2507,0.775,1,2.0],[0.0007,0.6604,0.1583,0.6604,1,2.0],[0.0931,0.8917,0.2507,0.8917,1,2.0]],[[0.0,0.4352,0.8417,0.4352,0,1.25],[-0.0,0.0786,1.0,0.0786,0,1.25],[0.0007,0.3104,1.0,0.3104,0,1.25],[0.8421,0.3098,0.8421,1.0,0,1.25],[0.4062,0.4345,0.4062,0.8888,1,2.0],[0.0007,0.8905,1.0,0.8905,0,1.25],[0.1597,0.4345,0.1597,0.8888,1,2.0],[0.159,0.078,0.159,0.3108,1,2.0],[0.0007,0.7391,0.8417,0.7391,1,2.0],[0.0007,0.5873,0.8417,0.5873,1,2.0]],[[0.9483,0.0767,0.9483,0.8764,0,1.25],[0.0525,0.0767,0.0525,0.8764,0,1.25],[0.5004,0.0767,0.5004,0.8764,0,1.25],[0.5694,0.0767,0.5694,0.8764,1,2.0],[0.4319,0.0767,0.4319,0.8764,1,2.0],[0.2333,0.0767,0.2333,0.8764,1,2.0],[0.7653,0.0767,0.7653,0.8764,1,2.0],[0.0521,0.3346,0.9479,0.3346,1,2.0],[0.0521,0.877,0.9479,0.877,0,1.25],[0.0521,0.0773,0.9486,0.0773,0,1.25],[0.8865,0.0389,0.8865,0.0767,0,1.25],[0.8865,0.8764,0.8865,0.9121,0,1.25],[0.1268,0.8764,0.1268,0.9121,0,1.25],[0.9484,0.0297,0.9484,0.0481,0,1.25],[0.9424,0.0385,0.9549,0.0385,0,1.25],[0.0518,0.0297,0.0518,0.0481,0,1.25],[0.0458,0.0385,0.0583,0.0385,0,1.25],[0.0518,0.9121,0.0518,0.9296,0,1.25],[0.0458,0.9205,0.0583,0.9205,0,1.25],[0.9479,0.0773,0.9736,0.0773,0,1.25],[0.8868,0.0,0.8868,0.0389,1,2.0],[0.9736,0.0776,1.0,0.0776,1,2.0],[0.1129,0.0389,0.1129,0.0767,0,1.25],[0.1132,0.0,0.1132,0.0389,1,2.0],[0.0264,0.0771,0.0521,0.0771,0,1.25],[-0.0,0.0767,0.0264,0.0767,1,2.0],[0.0264,0.8768,0.0521,0.8768,0,1.25],[-0.0,0.8764,0.0264,0.8764,1,2.0],[0.9479,0.877,0.9736,0.877,0,1.25],[0.9736,0.8774,1.0,0.8774,1,2.0],[0.8868,0.9121,0.8868,0.9489,1,2.0],[0.1271,0.9121,0.1271,0.9489,1,2.0]]],"R":[[[0.7965,0.0365,0.0896,0.0418,"y"],[0.7646,0.6555,0.1833,0.0522,"y"],[0.1139,0.0365,0.0896,0.0418,"b"]],[[0.7597,0.8408,0.1118,0.0524,"y"],[0.1139,0.0366,0.0896,0.0419,"b"],[0.7965,0.0366,0.0896,0.0419,"b"]],[[0.25,0.6073,0.25,0.0521,"y"],[0.1139,0.0365,0.0896,0.0417,"b"],[0.7965,0.0365,0.0896,0.0417,"b"]],[[0.1139,0.0364,0.0896,0.0416,"b"],[0.7965,0.0364,0.0896,0.0416,"b"],[0.8417,0.3098,0.1583,0.052,"y"]],[[0.1139,0.0358,0.0896,0.0409,"b"],[0.1264,0.8764,0.0896,0.0386,"b"],[0.7965,0.8764,0.0896,0.0386,"b"],[0.7965,0.0358,0.0896,0.0409,"b"],[0.5687,0.6649,0.1958,0.0483,"y"],[0.2326,0.6649,0.1986,0.0483,"y"]]]};
+  var svg=document.getElementById('bgfx'), gL=document.getElementById('fxL'), gR=document.getElementById('fxR');
+  var NS='http://www.w3.org/2000/svg', reduce=matchMedia('(prefers-reduced-motion: reduce)');
+  function L(a){return{x1:a[0],y1:a[1],x2:a[2],y2:a[3],dot:a[4],sw:a[5],h:Math.abs(a[3]-a[1])<1e-6}}
+  function Rc(a){return{x:a[0],y:a[1],w:a[2],h:a[3],c:a[4]}}
+  var secs=FX.L.map(function(ls,i){return{L:ls.map(L),R:FX.R[i].map(Rc)}});
+  /* order-preserving alignment: matched pieces glide, the rest shrink away or grow in */
+  function align(A,B,key,cost,skip){
+    A=A.slice().sort(function(p,q){return key(p)-key(q)});B=B.slice().sort(function(p,q){return key(p)-key(q)});
+    var n=A.length,m=B.length,D=[],i,j;
+    for(i=0;i<=n;i++){D.push([]);for(j=0;j<=m;j++){
+      if(!i&&!j)D[i][j]=0;
+      else D[i][j]=Math.min(i?D[i-1][j]+skip:1e9, j?D[i][j-1]+skip:1e9, i&&j?D[i-1][j-1]+cost(A[i-1],B[j-1]):1e9);}}
+    var out=[];i=n;j=m;
+    while(i||j){
+      if(i&&j&&D[i][j]===D[i-1][j-1]+cost(A[i-1],B[j-1])){out.push([A[i-1],B[j-1]]);i--;j--}
+      else if(i&&D[i][j]===D[i-1][j]+skip){out.push([A[i-1],null]);i--}
+      else{out.push([null,B[j-1]]);j--}
+    }
+    return out.reverse();
+  }
+  function mid(l){return[(l.x1+l.x2)/2,(l.y1+l.y2)/2]}
+  function lcost(a,b){var p=mid(a),q=mid(b);return Math.abs(p[0]-q[0])+Math.abs(p[1]-q[1])+.5*Math.abs((a.x2-a.x1+a.y2-a.y1)-(b.x2-b.x1+b.y2-b.y1))}
+  function rcost(a,b){return Math.abs(a.x-b.x)+Math.abs(a.y-b.y)+Math.abs(a.w-b.w)+Math.abs(a.h-b.h)}
+  var T=[];
+  for(var k=0;k<secs.length-1;k++){
+    var A=secs[k],B=secs[k+1];
+    var lp=align(A.L.filter(function(l){return l.h}),B.L.filter(function(l){return l.h}),function(l){return mid(l)[1]*10+mid(l)[0]},lcost,.35)
+      .concat(align(A.L.filter(function(l){return!l.h}),B.L.filter(function(l){return!l.h}),function(l){return mid(l)[0]*10+mid(l)[1]},lcost,.35));
+    var rp=align(A.R,B.R,function(r){return r.y*10+r.x},rcost,.6);
+    T.push({L:lp,R:rp});
+  }
+  var maxL=0,maxR=0;T.forEach(function(t){maxL=Math.max(maxL,t.L.length);maxR=Math.max(maxR,t.R.length)});
+  var lines=[],rects=[];
+  for(var i=0;i<maxL;i++){var e=document.createElementNS(NS,'line');gL.appendChild(e);lines.push(e)}
+  for(i=0;i<maxR;i++){var b=document.createElementNS(NS,'rect'),y=document.createElementNS(NS,'rect');b.setAttribute('fill','url(#hb)');y.setAttribute('fill','url(#hy)');gR.appendChild(b);gR.appendChild(y);rects.push([b,y])}
+  function ease(t){return t<=0?0:t>=1?1:t*t*(3-2*t)}
+  function lerp(a,b,t){return a+(b-a)*t}
+  function collapse(l){var p=mid(l);return{x1:p[0],y1:p[1],x2:p[0],y2:p[1],dot:l.dot,sw:l.sw}}
+  function cr(r){return{x:r.x+r.w/2,y:r.y+r.h/2,w:0,h:0,c:r.c}}
+  var first=document.querySelector('.spread'), ticking=false, mainEl=document.getElementById('home'), pinned=false;
+  var spreads=[].slice.call(document.querySelectorAll('.spread'));
+  var mq=matchMedia('(min-width: 821px)');
+  function setPinned(){
+    pinned=mq.matches&&(window.fdRoute||'home')==='home';document.documentElement.classList.toggle('pinned',pinned);
+    if(!pinned)mainEl.style.transform='';
+  }
+  addEventListener('fdroute',function(){setPinned();req()});
+  setPinned();(mq.addEventListener?mq.addEventListener('change',function(){setPinned();req()}):mq.addListener(function(){setPinned();req()}));
+  /* paged scrolling: each gesture plays one slow, timed move to the next spread */
+  var DUR=1700, anim=null, cur=0, lastWheel=0, acc=0, armed=true;
+  function Hh(){return first.offsetHeight||innerHeight}
+  function timeMap(f){ /* pass quickly through the hold stretches so the visible move uses most of the time */
+    var a=.08,b=.92; return f<a?f/a*.25 : f<b?.25+(f-a)/(b-a)*.5 : .75+(f-b)/(1-b)*.25 }
+  function animateTo(i){
+    i=Math.max(0,Math.min(spreads.length-1,i));
+    var from=scrollY/Hh(); cur=i;
+    if(reduce.matches||Math.abs(from-i)<.001){anim=null;scrollTo(0,i*Hh());return}
+    var dist=Math.abs(i-from), dur=DUR*Math.min(dist,1)+500*Math.max(0,dist-1), t0=performance.now();
+    var dir=i>from?1:-1, start=from;
+    function step(now){
+      var f=Math.min(1,(now-t0)/dur), pos;
+      if(dist<=1){ /* single spread: map through the hold zones of the spread pair being crossed */
+        var base=dir>0?Math.floor(start+1e-6):Math.ceil(start-1e-6)-1, local=dir>0?start-base:base+1-start;
+        var m=local+(1-local)*f; m=timeMap(m); pos=dir>0?base+m:base+1-m;
+        if(f===0)pos=start;
+      } else pos=start+(i-start)*(f<.5?2*f*f:1-Math.pow(-2*f+2,2)/2);
+      scrollTo(0,pos*Hh());
+      if(f<1)anim=requestAnimationFrame(step);else{anim=null;scrollTo(0,i*Hh())}
+    }
+    if(anim)cancelAnimationFrame(anim);anim=requestAnimationFrame(step);
+  }
+  var HOW=1, stepLock=0;
+  function busy(){return anim!==null||performance.now()<stepLock}
+  function stepMove(d){var S=window.fdSteps,i=Math.round(scrollY/Hh());if(i!==HOW||!S)return false;if(d<0&&S.get()===S.count-1)return false;var n=S.get()+d;return n>=0&&n<S.count}
+  function page(d){
+    if(window.fdLoading)return;
+    var i=Math.round(scrollY/Hh()),S=window.fdSteps;
+    /* scrolling up from the all-steps slide goes straight back to the landing spread */
+    if(i===HOW&&S&&d<0&&S.get()===S.count-1){animateTo(0);return}
+    if(i===HOW&&S){var n=S.get()+d;if(n>=0&&n<S.count){S.set(n,true);stepLock=performance.now()+(reduce.matches?200:520);return}}
+    var t=i+d;if(t===HOW&&S)S.set(d>0?0:S.count-1,false);animateTo(t);
+  }
+  function goTo(i,smooth){if(smooth)animateTo(i);else{if(anim)cancelAnimationFrame(anim);anim=null;cur=i;scrollTo(0,i*Hh())}}
+  function blocked(e){return document.querySelector('dialog[open]')||(e&&e.target&&e.target.closest&&e.target.closest('input,select,textarea,.app aside'))}
+  addEventListener('wheel',function(e){
+    if(!pinned||blocked(e))return; e.preventDefault(); if(window.fdLoading)return;
+    var now=performance.now(), quiet=now-lastWheel>220; lastWheel=now;
+    if(busy())return;               /* swallow trackpad momentum during a move */
+    if(quiet){armed=true;acc=0}
+    if(!armed&&!stepMove(e.deltaY>0?1:-1))return; /* momentum may keep turning steps, never starts a spread move */
+    acc+=e.deltaY;
+    if(Math.abs(acc)>25){var d=acc>0?1:-1;acc=0;armed=false;page(d)}
+  },{passive:false});
+  addEventListener('keydown',function(e){
+    if(!pinned||blocked(e)||e.altKey||e.ctrlKey||e.metaKey)return;
+    var k=e.key,d=null,t=null;
+    if(k==='ArrowDown'||k==='PageDown'||(k===' '&&!e.shiftKey))d=1;
+    else if(k==='ArrowUp'||k==='PageUp'||(k===' '&&e.shiftKey))d=-1;
+    else if(k==='Home')t=0;else if(k==='End')t=spreads.length-1;
+    if(d!==null||t!==null){e.preventDefault();if(busy())return;if(d!==null)page(d);else{if(window.fdSteps)fdSteps.set(t===HOW?0:fdSteps.get(),false);animateTo(t)}}
+  });
+  var ty=null;
+  addEventListener('touchstart',function(e){if(pinned)ty=e.touches[0].clientY},{passive:true});
+  addEventListener('touchmove',function(e){if(pinned&&!blocked(e))e.preventDefault()},{passive:false});
+  addEventListener('touchend',function(e){
+    if(!pinned||ty===null)return;var dy=ty-e.changedTouches[0].clientY;ty=null;
+    if(Math.abs(dy)>40&&!busy())page(dy>0?1:-1);
+  });
+  /* scrollbar drags or anything else that leaves it between spreads settles on the nearest one */
+  var idle;addEventListener('scroll',function(){
+    if(!pinned||busy())return;clearTimeout(idle);
+    idle=setTimeout(function(){var p=scrollY/Hh();if(Math.abs(p-Math.round(p))>.002)animateTo(Math.round(p))},180);
+  },{passive:true});
+  addEventListener('resize',function(){if(pinned&&!busy())scrollTo(0,Math.round(scrollY/Hh())*Hh())});
+  function idxOf(el){var sp=el&&el.closest&&el.closest('.spread');return sp?spreads.indexOf(sp):-1}
+  /* in-page links and keyboard focus scroll the rail, since the content layer itself doesn't scroll */
+  document.addEventListener('click',function(e){
+    if(!pinned)return;
+    var a=e.target.closest('a[href^="#"]');if(!a||a.getAttribute('href')==='#')return;
+    var t=document.getElementById(a.getAttribute('href').slice(1)),i=idxOf(t);if(i<0)return;
+    e.preventDefault();if(i===1&&window.fdSteps)fdSteps.set(0,false);goTo(i,true);
+    if(t.matches('input,select,button,textarea'))setTimeout(function(){t.focus({preventScroll:true})},reduce.matches?0:700);
+  });
+  document.addEventListener('focusin',function(e){
+    if(!pinned)return;var i=idxOf(e.target),H=first.offsetHeight||innerHeight;
+    if(i>=0&&Math.abs(scrollY-i*H)>2)goTo(i,false);
+  });
+  function frame(){
+    ticking=false;
+    document.getElementById('nav').classList.toggle('on-hero',pinned&&scrollY<(first.offsetHeight||innerHeight)/2); /* Sign in sits on yellow hatching only on the landing spread */
+    if(!pinned||getComputedStyle(svg).display==='none')return;
+    var W=document.documentElement.clientWidth, H=first.offsetHeight||innerHeight;
+    var p=Math.max(0,Math.min(secs.length-1,scrollY/H)), k=Math.min(Math.floor(p),secs.length-2), t=p-k;
+    /* hold each finished layout through the first and last stretch of every scroll between spreads */
+    var HOLD=.25; t=Math.max(0,Math.min(1,(t-HOLD)/(1-2*HOLD)));
+    if(pinned)mainEl.style.transform='translate3d(0,'+(-(k+(reduce.matches?t:ease(t)))*H).toFixed(2)+'px,0)';
+    var tr=T[k], n=tr.L.length, stag=.35;
+    tr.L.forEach(function(pr,i){
+      var e=reduce.matches?(t<.5?0:1):ease((t-stag*i/n)/(1-stag));
+      var a=pr[0]||collapse(pr[1]), b=pr[1]||collapse(pr[0]), el=lines[i];
+      var op=pr[0]&&pr[1]?1:pr[0]?1-e:e;
+      el.setAttribute('x1',lerp(a.x1,b.x1,e)*W);el.setAttribute('y1',lerp(a.y1,b.y1,e)*H);
+      el.setAttribute('x2',lerp(a.x2,b.x2,e)*W);el.setAttribute('y2',lerp(a.y2,b.y2,e)*H);
+      el.setAttribute('stroke-width',lerp(a.dot?2:1.25,b.dot?2:1.25,e));
+      el.setAttribute('stroke-dasharray',(e<.5?a:b).dot?'2.5 5':'none');
+      el.setAttribute('opacity',op);el.style.display='';
+    });
+    for(var i=n;i<lines.length;i++)lines[i].style.display='none';
+    tr.R.forEach(function(pr,i){
+      var e=reduce.matches?(t<.5?0:1):ease(t), a=pr[0]||cr(pr[1]), b=pr[1]||cr(pr[0]);
+      var x=lerp(a.x,b.x,e)*W,y=lerp(a.y,b.y,e)*H,w=lerp(a.w,b.w,e)*W,h=lerp(a.h,b.h,e)*H;
+      var ob=lerp(pr[0]&&pr[0].c==='b'?1:0,pr[1]&&pr[1].c==='b'?1:0,e), oy=lerp(pr[0]&&pr[0].c==='y'?1:0,pr[1]&&pr[1].c==='y'?1:0,e);
+      rects[i].forEach(function(r,j){r.setAttribute('x',x);r.setAttribute('y',y);r.setAttribute('width',Math.max(0,w));r.setAttribute('height',Math.max(0,h));r.setAttribute('opacity',j?oy:ob);r.style.display=''});
+    });
+    for(i=tr.R.length;i<rects.length;i++){rects[i][0].style.display=rects[i][1].style.display='none'}
+  }
+  function req(){if(!ticking){ticking=true;requestAnimationFrame(frame)}}
+  addEventListener('scroll',req,{passive:true});addEventListener('resize',req);
+  if(document.fonts)document.fonts.ready.then(req);
+  frame();
+})();
+/* Subscribe now: plan titles and descriptions type in, every line of a block at the same time, each time the spread comes into view */
+(function(){
+  var sec=document.getElementById('pricing'); if(!sec||!('IntersectionObserver' in window))return;
+  var els=[].slice.call(sec.querySelectorAll('.cell h3,.cell p')), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, raf=null, shown=false, lines=[];
+  var blocks=els.map(function(el){return{el:el,full:el.textContent.replace(/\s+/g,' ').trim()}});
+  /* split each block into its rendered lines so they can all type together */
+  function build(){
+    lines=[];
+    blocks.forEach(function(b){
+      var el=b.el; el.textContent='';
+      var words=b.full.split(' '), spans=words.map(function(w,i){var sp=document.createElement('span');sp.textContent=w+(i<words.length-1?' ':'');el.appendChild(sp);return sp});
+      var rows=[],top=null;
+      spans.forEach(function(sp){var t=sp.offsetTop;if(top===null||Math.abs(t-top)>2){rows.push('');top=t}rows[rows.length-1]+=sp.textContent});
+      el.textContent='';
+      var sr=document.createElement('span');sr.className='sr';sr.textContent=b.full;el.appendChild(sr);
+      var vis=document.createElement('span');vis.setAttribute('aria-hidden','true');vis.className='tl-wrap';el.appendChild(vis);
+      rows.forEach(function(r){
+        var row=document.createElement('span');row.className='tl';
+        var t=document.createElement('span'),c=document.createElement('span'),g=document.createElement('span');c.className='type-caret';g.className='type-ghost';
+        row.appendChild(t);row.appendChild(c);row.appendChild(g);vis.appendChild(row);
+        lines.push({text:r.replace(/ $/,''),t:t,c:c,g:g});
+      });
+    });
+  }
+  function set(l,n){l.t.textContent=l.text.slice(0,n);l.g.textContent=l.text.slice(n);l.c.style.display=n>=l.text.length?'none':''}
+  function all(n){var more=false;lines.forEach(function(l){set(l,Math.min(n,l.text.length));if(n<l.text.length)more=true});return more}
+  function play(){
+    cancelAnimationFrame(raf);build();
+    if(reduce){all(1e9);return}
+    var t0=performance.now(),CPS=110;
+    (function step(now){if(all(Math.floor((now-t0)/1000*CPS)))raf=requestAnimationFrame(step)})(t0);
+  }
+  function reset(){cancelAnimationFrame(raf);build();all(0)}
+  (document.fonts&&document.fonts.ready?document.fonts.ready:Promise.resolve()).then(function(){if(!shown)reset()});
+  reset();
+  var rz;addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){cancelAnimationFrame(raf);build();all(shown?1e9:0)},150)});
+  new IntersectionObserver(function(es){es.forEach(function(e){
+    var inView=e.intersectionRatio>=.85||(e.rootBounds&&e.intersectionRect.height>=e.rootBounds.height*.5); /* tall section on phones */
+    if(inView&&!shown){shown=true;play()}
+    else if(e.intersectionRatio<.02&&shown){shown=false;reset()}
+  })},{threshold:Array.from({length:21},function(_,i){return i/20})}).observe(sec);
+})();
+if(window.fdRouteInit)fdRouteInit();
+</script>
+</body>
+</html>
