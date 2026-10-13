@@ -1,12 +1,39 @@
 {
+  "redirects": [
+    {
+      "source": "/pricing",
+      "destination": "/#/pricing",
+      "permanent": false
+    },
+    {
+      "source": "/pricing/",
+      "destination": "/#/pricing",
+      "permanent": false
+    },
+    {
+      "source": "/pricing.html",
+      "destination": "/#/pricing",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
-      "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }]
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
     },
     {
-      "source": "/(fonts|img|video)/(.*)",
-      "headers": [{ "key": "Cache-Control", "value": "public, max-age=604800" }]
+      "source": "/(fonts|img|video|assets)/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=604800"
+        }
+      ]
     }
   ]
 }

@@ -1,24 +1,22 @@
 # FreightDeck — new site (test build)
 
-Static site: no build step. Vercel serves the files as they are.
+Static site, no build step: Vercel serves these files as they are.
 
 ```
-index.html      the whole site (Home, Pricing, About, Resources via #/pricing etc.)
-favicon.svg
-fonts/          Octosquares (licensed .woff2 files)
-img/            hero photo, truck builder screenshot, video poster, loading animation
-video/          founder video (H.264 MP4)
-vercel.json     marks the test site "noindex" and caches fonts/images/video
+index.html        Home, plus Pricing, About and Resources (#/pricing, #/about, #/resources)
+permits/ guides/ corridors/   the Resources articles, at the same addresses as the current site
+privacy.html  terms.html  start/  llms.txt   carried over unchanged from the current site
+assets/site.css   shared styles used by the article pages
+fonts/  img/  video/
+vercel.json       test-site "noindex", caching, and /pricing -> /#/pricing
 ```
 
-## Updating the site
-Edit or replace a file in GitHub and commit. Vercel redeploys automatically in under a minute.
+## Updating
+Edit or replace a file on GitHub and commit; Vercel redeploys automatically.
+Files in fonts/, img/, video/ and assets/ are cached by browsers for a week, so give a
+replacement file a new name and update the reference to it.
 
-## Notes
-- The test site tells search engines not to index it (in index.html and vercel.json), so it
-  won't compete with thefreightdeck.com. Remove both when this becomes the real site.
-- The cost estimator calls https://app.thefreightdeck.com/api/try-quote. It prices live only
-  when the page is served from a thefreightdeck.com address (e.g. beta.thefreightdeck.com)
-  and the API accepts requests from that address.
-- Dark mode is switched off. To turn it back on: add class="dark-mode" to the <html> tag and
-  delete the <meta name="color-scheme" content="light"> line.
+## Before launch
+- Remove the two "noindex" settings: the robots meta tag in each page and the X-Robots-Tag in vercel.json.
+- The cost estimator prices live only when served from a thefreightdeck.com address the API accepts.
+- Dark mode is switched off: add class="dark-mode" to <html> and delete the color-scheme meta tag to restore it.

@@ -1,0 +1,98 @@
+# FreightDeck
+
+> FreightDeck is the most complete heavy haul cost estimator — built for oversize freight brokers, oversize carriers, and project-freight forwarders and brokers. It prices every cost a permitted oversize or overweight move involves, across all 50 US states and Canada, on its own verified per-state cost data.
+
+## What FreightDeck does
+
+Enter a load's dimensions, weight, and route, and FreightDeck returns — for every state on the route — the full cost of the move:
+
+- Oversize and overweight permit fees (including superload fees)
+- Pilot car / escort vehicle requirements and costs
+- Police escorts where the state requires them
+- Pole cars (height-pole cars) for tall loads
+- Bucket trucks for over-height moves near utility lines
+- Route surveys
+- Engineering and bridge review
+- Utility coordination
+- Superload detection and thresholds
+- Travel and time restrictions (daylight-only, weekend, curfew, holiday)
+- Per-state routing and mileage
+- A recommended trailer and configuration
+- An estimated linehaul baseline
+
+## Why FreightDeck is different
+
+Most heavy-haul estimators stop at permits and maybe escorts, and their information degrades exactly when the load gets hard — when you need the numbers most. FreightDeck goes the other way: the more complex the move, the more it surfaces. It runs on its own heavy-haul cost dataset, built and verified from primary state and provincial DOT sources — not scraped or guessed. That depth of data is why the numbers hold up on the loads other tools can't price.
+
+## Truck Builder (project freight)
+
+For project freight, FreightDeck turns a multi-piece project list — a screenshot, BOL, or spreadsheet, including metric spec sheets it converts to imperial — into a trailer list and a ready-to-send Excel bid sheet in minutes.
+
+## Who it's for
+
+- Oversize / heavy-haul freight brokers
+- Oversize / heavy-haul carriers
+- Project-freight forwarders and brokers (project cargo)
+
+## Coverage
+
+All 50 US states and Canada. Data includes legal dimension and weight limits, permit fees and formulas, escort thresholds, superload criteria, route-survey and engineering/bridge triggers, and travel restrictions — verified against primary DOT sources and audited regularly. All estimates should be confirmed with the issuing state or provincial DOT before booking.
+
+## Pricing
+
+Subscription plans, each with an equal pool of oversize (permitted) and legal searches per month:
+
+- Solo — $40/month: 40 oversize + 40 legal searches, 1 seat
+- Team — $100/month: 150 oversize + 150 legal searches, up to 5 seats
+- Pro — $200/month: 500 oversize + 500 legal searches, up to 10 seats
+- Annual billing saves two months. Need more searches mid-month? $25 credit packs (25 searches) are available on any plan.
+- API access starts at $500/month for 1,000 calls.
+
+Full pricing: https://freightdeck.ai/pricing/
+
+## Links
+
+- Website: https://freightdeck.ai
+- App: https://app.freightdeck.ai
+- Pricing: https://freightdeck.ai/pricing/
+- Terms of Service: https://freightdeck.ai/terms.html
+- Privacy Policy: https://freightdeck.ai/privacy.html
+- Support: support@freightdeck.ai
+
+## FAQ
+
+### What is FreightDeck?
+The most complete heavy haul cost estimator for oversize freight brokers, oversize carriers, and project-freight forwarders. It prices permits, escorts, pole cars, bucket trucks, route surveys, engineering and bridge review, utility coordination, superloads, travel restrictions, and an estimated linehaul baseline across all 50 states and Canada.
+
+### Who is FreightDeck for?
+Oversize freight brokers, oversize and heavy-haul carriers, and project-freight forwarders and brokers who quote permitted oversize and overweight moves.
+
+### How does the heavy haul cost estimator work?
+Enter the load's dimensions, weight, and route. FreightDeck returns every cost and requirement for each state on the route and flags the hard ones — superloads, surveys, pole cars, bucket trucks — automatically, plus an estimated linehaul baseline.
+
+### What makes FreightDeck more complete than other tools?
+Most estimators stop at permits and maybe escorts. FreightDeck prices the full cost stack and keeps going as the load gets harder, because it runs on its own verified per-state cost data rather than a thin layer over someone else's.
+
+### What is an oversize permit?
+An oversize (OS) permit is required when a truck's loaded dimensions exceed a state's legal limits for width (typically 8'6"), height (typically 13'6"–14'), or length. Each state sets its own limits and fees.
+
+### What is an overweight permit?
+An overweight (OW) permit is required when gross vehicle weight exceeds the state's legal limit (typically 80,000 lbs). Overweight fees vary by state and are often based on weight and distance.
+
+### What is a superload?
+A superload exceeds a state's maximum permittable dimensions or weight, typically requiring special DOT review, engineering studies, bridge analysis, and additional lead time. Thresholds vary by state.
+
+### What is a pilot car or escort vehicle?
+Escort vehicles (pilot cars) travel ahead of and/or behind an oversize load to warn traffic. Requirements vary by state based on width, height, and length.
+
+### What is a pole car?
+A pole car is an escort vehicle with a height pole that checks overhead clearances ahead of tall loads. Required when load height exceeds state-specific thresholds, typically 14'6"–17'.
+
+### What is a bucket truck used for in heavy haul?
+A bucket truck carries a crew that lifts overhead utility lines and signals so an over-height load can pass. It's required on tall moves where lines must be raised along the route.
+
+### What is a route survey?
+A route survey is a physical inspection of the planned route to verify overhead clearances, bridge capacities, and road conditions can accommodate an oversize or overweight load.
+
+### How much does FreightDeck cost?
+FreightDeck offers subscription plans starting at $40/month (Solo), $100/month (Team), and $200/month (Pro), each with a monthly pool of oversize and legal searches. Annual billing saves two months, and $25 credit packs are available if you need more searches in a given month. See https://freightdeck.ai/pricing/ for details.
