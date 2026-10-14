@@ -903,3 +903,35 @@ dialog .content{padding:18px}
   .row.last-row .cmp{border-top:1.25px solid var(--line);border-bottom:1.25px solid var(--line)}
 }
 @media (max-width:820px) and (prefers-reduced-motion:reduce){.nav-toggle span{transition:none}}
+@media (max-width:820px){
+  /* closing spread: no full-screen minimum, so the footer follows the buttons */
+  .spread.close{min-height:0!important;gap:22px;padding-bottom:24px}
+  .close .footer-links{margin-top:28px}
+  /* centred type */
+  body{text-align:center}
+  .btn,.btn.abs{justify-content:center;text-align:center}
+  .hero .logo-cell,.sub .ricon,.sub .cell{justify-content:center}
+  .how .step-head{justify-content:center}
+  .plan .tag{left:50%;transform:translateX(-50%)}
+  .hero .logo{margin:0 auto}
+  .sub .includes{justify-content:center;padding-left:0}
+  #nav.open a:not(.mark){justify-content:center}
+  .close .footer-links,.pfoot{justify-content:center}
+  .plan li,.cost{justify-content:center;text-align:center}
+  .billing,.band{justify-content:center}
+  .sl-list{justify-items:center}
+  .quote figcaption,.quote blockquote{text-align:center}
+  .faq summary{text-align:left}
+  .faq details p{margin:0 auto}
+  .cmp th,.cmp td.na{text-align:left}
+  .qb{text-align:left}
+  .fdt-row2,.fdt-row4,#fdTeaser .fdt-label{text-align:left}
+  .how .step p,.lede2,.sl-copy p,.builder .lede,.quote h3{margin-left:auto;margin-right:auto}
+  .sub .cell p,.sub .cell h3{text-align:center}
+  article.doc.doc{text-align:center}
+  article.doc.doc h1,article.doc.doc .lead,article.doc.doc .lede,article.doc.doc .intro,article.doc.doc .sub{margin-left:auto;margin-right:auto}
+  article.doc.doc h2,article.doc.doc .ch-head{justify-content:center}
+  article.doc.doc td,article.doc.doc th,article.doc.doc summary,article.doc.doc .qb,article.doc.doc .play{text-align:left}
+  article.doc.doc ul:not(.grid):not(.chapters-in),article.doc.doc ol{list-style-position:inside;padding-left:0}
+  article.doc.doc .chapters-in{justify-content:center}
+}
