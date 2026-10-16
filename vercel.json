@@ -19,6 +19,12 @@
   "headers": [
     {
       "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "(?<staging>.*\\.vercel\\.app)"
+        }
+      ],
       "headers": [
         {
           "key": "X-Robots-Tag",
